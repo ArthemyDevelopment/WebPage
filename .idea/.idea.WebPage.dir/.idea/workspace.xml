@@ -21,8 +21,8 @@
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/vendor/bootstrap/css/bootstrap.min.css" />
-      <option value="$PROJECT_DIR$/assets/css/fontawesome.css" />
       <option value="$PROJECT_DIR$/assets/css/owl.css" />
+      <option value="$PROJECT_DIR$/assets/css/fontawesome.css" />
       <option value="$PROJECT_DIR$/assets/css/templatemo-style.css" />
       <option value="$PROJECT_DIR$/index.html" />
     </changedPaths>
@@ -46,14 +46,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1628265472368</updated>
-      <workItem from="1628265477792" duration="3749000" />
+      <workItem from="1628265477792" duration="4404000" />
+      <workItem from="1628287101919" duration="1600000" />
+      <workItem from="1628288742526" duration="1276000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

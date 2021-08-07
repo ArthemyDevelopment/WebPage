@@ -157,6 +157,12 @@ html {
 }
 
 .menu .author-content span {
+    font-size: 15px;
+    font-style: italic;
+    color: #3c3c3e;
+}
+
+.menu .author-content p{
     font-size: 13px;
     font-style: italic;
     color: #3c3c3e;
@@ -193,6 +199,7 @@ html {
 }
 
 .menu .copyright-text p {
+    color:#3c3c3e;
     border-top: 1px solid rgba(250, 250, 250, 0.1);
     display: inline-block;
     width: 100%;
