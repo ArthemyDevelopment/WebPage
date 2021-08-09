@@ -20,12 +20,13 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/vendor/bootstrap/css/bootstrap.min.css" />
       <option value="$PROJECT_DIR$/assets/css/owl.css" />
       <option value="$PROJECT_DIR$/assets/css/fontawesome.css" />
       <option value="$PROJECT_DIR$/ContactForm.php" />
-      <option value="$PROJECT_DIR$/assets/css/templatemo-style.css" />
+      <option value="$PROJECT_DIR$/vendor/bootstrap/css/bootstrap.min.css" />
+      <option value="$PROJECT_DIR$/vendor/bootstrap/css/bootstrap.css" />
       <option value="$PROJECT_DIR$/index.html" />
+      <option value="$PROJECT_DIR$/assets/css/templatemo-style.css" />
     </changedPaths>
   </component>
   <component name="JsBowerSettings">
@@ -58,6 +59,7 @@
       <workItem from="1628288742526" duration="1276000" />
       <workItem from="1628354482871" duration="9869000" />
       <workItem from="1628469225692" duration="6113000" />
+      <workItem from="1628537704233" duration="1405000" />
     </task>
     <servers />
   </component>
