@@ -236,7 +236,7 @@ html {
     left: 10%;
   -webkit-transition: -webkit-transform 233ms cubic-bezier(0, 0, 0.21, 1);
   -webkit-overflow-scrolling: touch;
-  background-color: #75deb5;
+  background-color: #75deb5; /*#75deb5*/
   box-sizing: border-box;
   height: 100vh;  
   max-height: 100vh !important;
@@ -268,7 +268,7 @@ html {
     position: fixed;
     top: 0;
     left: 0;
-    color: #a43f49;
+    color: #51b58f;
     background-color: #fff;
     width: 60px;
     height: 60px;
@@ -284,7 +284,7 @@ html {
 #menu-close {
     cursor: pointer;
     text-align: right;
-    color: #a43f49;
+    color: #75deb5;
     background-color: #fff;
     width: 100%;
     height: 60px;
@@ -321,7 +321,7 @@ html {
 .section-heading .line-dec {
     width: 60px;
     height: 3px;
-    background-color: #a43f49;
+    background-color: #75deb5;
     margin: 10px auto;
 }
 
@@ -329,8 +329,15 @@ html {
     margin-top: 5px;
     font-size: 16px;
     color: #fff;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
 }
+
+.section p{
+    font-size: 15px;
+    word-spacing: 1.5px;
+}
+
+
 
 
 /* Buttons */
@@ -347,7 +354,7 @@ html {
     display: inline-block;
     padding: 12px 20px;
     background-color: #fff;
-    color: #a43f49;
+    color: #51b58f;
     font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.5px;
@@ -356,7 +363,7 @@ html {
 }
 
 .white-button a:hover {
-    background-color: #a43f49;
+    background-color: #75deb5;
     color: #fff;
 }
 
@@ -364,7 +371,7 @@ button {
     display: inline-block;
     padding: 10px 20px;
     background-color: #fff;
-    color: #a43f49;
+    color: #51b58f;
     font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.5px;
@@ -377,7 +384,7 @@ button {
 
 button:hover {
     outline: none;
-    background-color: #a43f49;
+    background-color: #75deb5;
     color: #fff;
 }
 
