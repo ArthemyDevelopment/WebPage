@@ -309,9 +309,11 @@ html {
 
 .section-heading {    
     padding: 80px 70px;
+    text-align: center;
 }
 
-.section-heading span {
+
+.section-heading span{
     text-align: center;
     margin-top: 5px;
     font-size: 16px;
@@ -324,9 +326,6 @@ html {
     font-weight: 700;
     color: #fff;
     text-align: center;
-}
-.section-heading span .intro{
-    text-align: left;
 }
 
 .section-heading .line-dec {
