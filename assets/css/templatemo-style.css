@@ -321,6 +321,26 @@ html {
     letter-spacing: 0.6px;
 }
 
+.main-section-heading {
+    padding: 10% 2%;
+    text-align: justify;
+}
+
+
+.main-section-heading span{
+    text-align: justify;
+    margin-top: 5px;
+    font-size: 16px;
+    color: #fff;
+    letter-spacing: 0.6px;
+}
+.main-section-heading h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+}
+
 .section-heading h2 {
     font-size: 28px;
     font-weight: 700;
@@ -329,6 +349,14 @@ html {
 }
 
 .section-heading .line-dec {
+    width: 60px;
+    height: 3px;
+    background-color: #75deb5;
+    margin: 10px auto;
+}
+
+.section-heading .mine-line-dec {
+    text-align: justify;
     width: 60px;
     height: 3px;
     background-color: #75deb5;
