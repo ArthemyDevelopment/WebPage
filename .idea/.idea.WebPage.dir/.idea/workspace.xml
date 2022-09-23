@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="684c6d5a-2d31-445f-b5af-5a73ac5ce67c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/feed.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feed.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +94,7 @@
       <workItem from="1646512444841" duration="219000" />
       <workItem from="1648874427981" duration="293000" />
       <workItem from="1653798390516" duration="740000" />
-      <workItem from="1663945830328" duration="903000" />
+      <workItem from="1663945830328" duration="1031000" />
     </task>
     <servers />
   </component>
