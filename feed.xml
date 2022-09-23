@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+    <rss version="1">
+    
+    <channel>
+        <title>RSS</title>
+        <link>https://www.arthemy.dev</link>
+        <description>Test</description>
+        <language>en</language>
+        
+        <item>
+            <title><![CDATA[
+		        Test feed title news
+	        ]]></title>
+
+            <description><![CDATA[
+		        This is a test description of a new, here it should be the resume of the thing
+	        ]]></description>
+
+            <content><![CDATA[
+		        https://www.arthemy.dev/assets/images/ProfileImage.jpg
+	        ]]></content>
+
+            <link>
+                https://www.arthemy.dev
+            </link>
+
+            <guid isPermaLink="true">
+                https://www.arthemy.dev
+            </guid>
+
+            <category><![CDATA[
+		        News
+	        ]]></category>
+
+            <dc:creator><![CDATA[
+		        Test
+	        ]]></dc:creator>
+
+            <pubDate>
+                Thu, 22 Sep 2022 16:00:00 GMT
+            </pubDate>
+
+        </item>
+        
+    </channel>
+    
+</rss>
