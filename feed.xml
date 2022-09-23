@@ -8,7 +8,7 @@
         <language>en</language>
         
         <item>
-            <title><![CDATA[Test feed title news]]></title>
+            <title><![CDATA[New weapon available in the store]]></title>
 
             <description><![CDATA[https://www.arthemy.dev/assets/images/ProfileImage.jpg]]></description>
 
@@ -31,7 +31,7 @@
         </item>
 <!-- ITEM SEPARATOR-->
         <item>
-            <title><![CDATA[Test feed title news]]></title>
+            <title><![CDATA[New Update]]></title>
 
             <description><![CDATA[https://www.arthemy.dev/assets/images/ProfileImage.jpg]]></description>
 
