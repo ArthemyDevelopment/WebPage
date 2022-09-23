@@ -8,21 +8,13 @@
         <language>en</language>
         
         <item>
-            <title><![CDATA[
-		        Test feed title news
-	        ]]></title>
+            <title><![CDATA[Test feed title news]]></title>
 
-            <description><![CDATA[
-		        This is a test description of a new, here it should be the resume of the thing
-	        ]]></description>
+            <description><![CDATA[https://www.arthemy.dev/assets/images/ProfileImage.jpg]]></description>
 
-            <content><![CDATA[
-		        https://www.arthemy.dev/assets/images/ProfileImage.jpg
-	        ]]></content>
+            <content><![CDATA[https://www.arthemy.dev/assets/images/ProfileImage.jpg]]></content>>
 
-            <link>
-                https://www.arthemy.dev
-            </link>
+            <link>https://www.arthemy.dev</link>
 
             <guid isPermaLink="true">
                 https://www.arthemy.dev
