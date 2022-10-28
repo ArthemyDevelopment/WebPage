@@ -8,13 +8,13 @@
         <language>en</language>
         
         <item>
-            <title><![CDATA[Test feed title news]]></title>
+            <title><![CDATA[New pet available]]></title>
 
-            <description><![CDATA[https://www.arthemy.dev/assets/images/ProfileImage.jpg]]></description>
+            <description><![CDATA[https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=]]></description>
 
             <content><![CDATA[https://www.arthemy.dev/assets/images/ProfileImage.jpg]]></content>>
 
-            <link>https://www.arthemy.dev</link>
+            <link>https://play.google.com/store/apps/details?id=com.KickStoneStudios.MineGeon</link>
 
             <guid isPermaLink="true">
                 https://www.arthemy.dev
@@ -31,16 +31,16 @@
         </item>
 <!-- ITEM SEPARATOR-->
         <item>
-            <title><![CDATA[Test feed title news]]></title>
+            <title><![CDATA[New Update]]></title>
 
-            <description><![CDATA[https://www.arthemy.dev/assets/images/ProfileImage.jpg]]></description>
+            <description><![CDATA[https://kickstonestudio.com/wp-content/uploads/2022/08/3-1024x467.png]]></description>
 
             <content><![CDATA[https://www.arthemy.dev/assets/images/ProfileImage.jpg]]></content>>
 
-            <link>https://www.arthemy.dev</link>
+            <link>https://kickstonestudio.com/#minegeon</link>
 
             <guid isPermaLink="true">
-                https://www.arthemy.dev
+                https://kickstonestudio.com/#minegeon
             </guid>
 
             <category><![CDATA[
@@ -75,53 +75,7 @@
             </pubDate>
 
         </item>
-<!-- ITEM SEPARATOR-->
-        <item>
-            <title><![CDATA[Test feed title news]]></title>
 
-            <description><![CDATA[https://www.arthemy.dev/assets/images/ProfileImage.jpg]]></description>
-
-            <content><![CDATA[https://www.arthemy.dev/assets/images/ProfileImage.jpg]]></content>>
-
-            <link>https://www.arthemy.dev</link>
-
-            <guid isPermaLink="true">
-                https://www.arthemy.dev
-            </guid>
-
-            <category><![CDATA[
-		        News
-	        ]]></category>
-
-            <pubDate>
-                Thu, 22 Sep 2022 16:00:00 GMT
-            </pubDate>
-
-        </item>
-
-<!-- ITEM SEPARATOR-->
-        <item>
-            <title><![CDATA[Test feed title news]]></title>
-
-            <description><![CDATA[https://www.arthemy.dev/assets/images/ProfileImage.jpg]]></description>
-
-            <content><![CDATA[https://www.arthemy.dev/assets/images/ProfileImage.jpg]]></content>>
-
-            <link>https://www.arthemy.dev</link>
-
-            <guid isPermaLink="true">
-                https://www.arthemy.dev
-            </guid>
-
-            <category><![CDATA[
-		        News
-	        ]]></category>
-
-            <pubDate>
-                Thu, 22 Sep 2022 16:00:00 GMT
-            </pubDate>
-
-        </item>
         
     </channel>
     
