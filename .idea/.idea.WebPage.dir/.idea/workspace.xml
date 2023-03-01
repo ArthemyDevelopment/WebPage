@@ -53,13 +53,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "WebServerToolWindowFactoryState": "false",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\matia\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\matia\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\matia\\AppData\\Local\\Symbols\\src"
+    ]
   }
-}</component>
+}]]></component>
   <component name="ReaderModeSettings">
     <option name="showLigatures" value="false" />
   </component>
@@ -127,7 +134,10 @@
       <workItem from="1666997039446" duration="440000" />
       <workItem from="1667155072566" duration="2927000" />
       <workItem from="1667342756537" duration="364000" />
-      <workItem from="1669560660796" duration="677000" />
+      <workItem from="1669560660796" duration="711000" />
+      <workItem from="1669574879698" duration="952000" />
+      <workItem from="1669683178179" duration="6000" />
+      <workItem from="1677709204380" duration="493000" />
     </task>
     <servers />
   </component>
