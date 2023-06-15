@@ -57,6 +57,7 @@
   &quot;keyToString&quot;: {
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -139,6 +140,8 @@
       <workItem from="1669683178179" duration="6000" />
       <workItem from="1677709204380" duration="1156000" />
       <workItem from="1677765932895" duration="707000" />
+      <workItem from="1686800920297" duration="3076000" />
+      <workItem from="1686804096103" duration="476000" />
     </task>
     <servers />
   </component>
