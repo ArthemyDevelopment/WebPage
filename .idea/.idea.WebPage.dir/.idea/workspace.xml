@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="684c6d5a-2d31-445f-b5af-5a73ac5ce67c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebPage.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebPage.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/all.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/all.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/templatemo-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/templatemo-style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -163,7 +165,8 @@
       <workItem from="1748446688886" duration="25000" />
       <workItem from="1749650289059" duration="773000" />
       <workItem from="1751636421642" duration="2496000" />
-      <workItem from="1753316451954" duration="616000" />
+      <workItem from="1753316451954" duration="794000" />
+      <workItem from="1757506870333" duration="701000" />
     </task>
     <servers />
   </component>
