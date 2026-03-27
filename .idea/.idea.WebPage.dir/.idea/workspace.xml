@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="684c6d5a-2d31-445f-b5af-5a73ac5ce67c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/HopingForest_PrivacyPolicy.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HopingForest_TermsAndConditions.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebPage.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebPage.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +32,22 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Assets/FFmpegOut/Runtime/CameraCapture.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Assets/FFmpegOut/Runtime/FFmpegPreset.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Assets/FFmpegOut/Runtime/FFmpegSession.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Assets/FFmpegOut/Runtime/Internal/FFmpegPipe.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Assets/FaceMesh/Script/BoundingBox.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Assets/FaceMesh/Script/FacePipeline_Base.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Assets/FaceMesh/Script/FacePipeline_Process.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Assets/FaceMesh/Script/FacePipeline_Public.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Assets/FaceMesh/Script/FaceRegion.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Assets/FaceMesh/Script/ResourceSet.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Assets/Visualizer/Script/Visualizer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Library/PackageCache/jp.keijiro.klak.testtools@1.0.4/Script/ImageSource.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Library/PackageCache/jp.keijiro.mediapipe.blazeface@1.2.0/Runtime/ResourceSet.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Users/Downloads/FaceMeshBarracuda-main/FaceMeshBarracuda-main/Library/PackageCache/jp.keijiro.mediapipe.facelandmark@1.1.0/Runtime/ResourceSet.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -166,6 +183,8 @@
       <workItem from="1753316451954" duration="794000" />
       <workItem from="1757506870333" duration="1311000" />
       <workItem from="1758933312712" duration="360000" />
+      <workItem from="1774274979470" duration="7601000" />
+      <workItem from="1774618474362" duration="158000" />
     </task>
     <servers />
   </component>
