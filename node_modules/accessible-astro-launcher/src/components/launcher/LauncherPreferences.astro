@@ -1,0 +1,73 @@
+---
+/**
+ * LauncherPreferences Component
+ *
+ * @description A fieldset wrapper for preference toggle switches with a legend.
+ * Uses semantic HTML structure for accessibility.
+ */
+
+interface Props {
+  /**
+   * Group label displayed as the fieldset legend
+   */
+  label: string
+  /**
+   * Additional classes to apply
+   */
+  class?: string
+  /**
+   * HTML attributes to spread on the fieldset
+   */
+  [key: string]: string | undefined
+}
+
+const { label, class: className, ...rest } = Astro.props
+
+// Generate unique ID for filtering
+const groupId = `launcher-preferences-${Math.random().toString(36).substring(2, 9)}`
+---
+
+<fieldset
+  class:list={['launcher-preferences', className]}
+  data-launcher-group={groupId}
+  {...rest}
+>
+  <legend class="legend">{label}</legend>
+  <div class="items">
+    <slot />
+  </div>
+</fieldset>
+
+<style>
+  :where(.launcher-preferences) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--launcher-space-xs);
+    margin: 0;
+    margin-block-start: var(--launcher-space-md);
+    border: none;
+    padding: 0;
+  }
+
+  :where(.launcher-preferences:first-child) {
+    margin-block-start: var(--launcher-space-lg);
+  }
+
+  :where(.legend) {
+    display: block;
+    padding-inline: var(--launcher-space-md);
+    padding-block-start: var(--launcher-space-xs);
+    color: var(--launcher-subtle-text-color);
+    font-weight: 600;
+    font-size: var(--launcher-font-size-sm);
+    line-height: var(--launcher-line-height);
+    letter-spacing: 0.075em;
+    text-transform: uppercase;
+  }
+
+  :where(.items) {
+    display: flex;
+    flex-direction: column;
+    padding-inline: var(--launcher-space-xs);
+  }
+</style>

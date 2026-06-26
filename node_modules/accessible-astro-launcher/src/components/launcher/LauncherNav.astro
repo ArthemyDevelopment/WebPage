@@ -1,0 +1,83 @@
+---
+/**
+ * LauncherNav Component
+ *
+ * @description A navigation wrapper with heading for navigation links.
+ * Uses semantic HTML structure for accessibility.
+ */
+
+interface Props {
+  /**
+   * Group label displayed as the navigation heading
+   */
+  label: string
+  /**
+   * Heading level for the navigation label
+   * @default 3
+   */
+  headingLevel?: 2 | 3 | 4 | 5 | 6
+  /**
+   * Additional classes to apply
+   */
+  class?: string
+  /**
+   * HTML attributes to spread on the nav element
+   */
+  [key: string]: string | number | undefined
+}
+
+const { label, headingLevel = 3, class: className, ...rest } = Astro.props
+
+// Generate unique ID for aria-labelledby
+const navId = `launcher-nav-${Math.random().toString(36).substring(2, 9)}`
+
+// Dynamic heading element
+const HeadingTag = `h${headingLevel}` as 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+---
+
+<nav
+  class:list={['launcher-nav', className]}
+  aria-labelledby={navId}
+  data-launcher-group={navId}
+  {...rest}
+>
+  <HeadingTag id={navId} class="heading">{label}</HeadingTag>
+  <ul class="items" role="list">
+    <slot />
+  </ul>
+</nav>
+
+<style>
+  :where(.launcher-nav) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--launcher-space-xs);
+    margin-block-start: var(--launcher-space-md);
+  }
+
+  :where(.launcher-nav:first-child) {
+    margin-block-start: var(--launcher-space-lg);
+  }
+
+  :where(.heading) {
+    display: block;
+    margin: 0;
+    padding-inline: var(--launcher-space-md);
+    padding-block-start: var(--launcher-space-xs);
+    color: var(--launcher-subtle-text-color);
+    font-weight: 600;
+    font-size: var(--launcher-font-size-sm);
+    line-height: var(--launcher-line-height);
+    letter-spacing: 0.075em;
+    text-transform: uppercase;
+  }
+
+  :where(.items) {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    padding-inline: var(--launcher-space-xs);
+    list-style: none;
+  }
+</style>

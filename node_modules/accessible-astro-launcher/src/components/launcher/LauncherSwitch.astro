@@ -1,0 +1,301 @@
+---
+/**
+ * LauncherSwitch Component
+ *
+ * @description A switch toggle button with role="switch" for preference controls.
+ * Includes LED indicator for visual state feedback.
+ */
+
+interface Props {
+  /**
+   * Display label for the switch
+   */
+  label: string
+  /**
+   * Action identifier (dispatched via launcher:action event)
+   */
+  onAction: string
+  /**
+   * Initial checked state for the switch
+   * @default false
+   */
+  checked?: boolean
+  /**
+   * Additional search keywords for filtering
+   */
+  keywords?: string[]
+  /**
+   * Label for the type indicator (i18n support)
+   * @default "Toggle"
+   */
+  typeLabel?: string
+  /**
+   * Additional classes to apply
+   */
+  class?: string
+  /**
+   * HTML attributes to spread on the wrapper
+   */
+  [key: string]: string | string[] | boolean | undefined
+}
+
+const {
+  label,
+  onAction,
+  checked = false,
+  keywords = [],
+  typeLabel = 'Toggle',
+  class: className,
+  ...rest
+} = Astro.props
+
+// Generate unique ID for the switch
+const switchId = `launcher-switch-${Math.random().toString(36).substring(2, 9)}`
+
+// Data attributes for search/filtering
+const dataAttrs = {
+  'data-label': label,
+  'data-keywords': keywords.join(','),
+  'data-action': onAction,
+}
+---
+
+<div class:list={['launcher-switch-wrapper', className]} {...rest}>
+  <button
+    id={switchId}
+    type="button"
+    class="launcher-switch"
+    role="switch"
+    aria-checked={checked ? 'true' : 'false'}
+    tabindex="-1"
+    {...dataAttrs}
+  >
+    <span class="led" aria-hidden="true"></span>
+    <span class="text">
+      <span class="label">{label}</span>
+    </span>
+    <span class="type">
+      {typeLabel}
+    </span>
+  </button>
+</div>
+
+<script>
+  /**
+   * LauncherSwitch State Sync
+   *
+   * Listens for external state change events and updates the aria-checked
+   * attribute accordingly. This allows launcher switches to stay in sync
+   * with preferences controlled elsewhere (e.g., DarkMode component).
+   *
+   * Supported events:
+   * - darkmode:change → syncs with data-action="toggle-dark-mode"
+   * - highcontrast:change → syncs with data-action="toggle-high-contrast"
+   * - reducemotion:change → syncs with data-action="toggle-reduced-motion"
+   */
+
+  // Map of event names to their corresponding action identifiers
+  const eventActionMap: Record<string, string> = {
+    'darkmode:change': 'toggle-dark-mode',
+    'highcontrast:change': 'toggle-high-contrast',
+    'reducemotion:change': 'toggle-reduced-motion',
+  }
+
+  /**
+   * Update aria-checked state for a launcher switch
+   */
+  const updateSwitchState = (action: string, enabled: boolean) => {
+    const switches = document.querySelectorAll<HTMLButtonElement>(
+      `.launcher-switch[data-action="${action}"]`
+    )
+
+    switches.forEach((switchEl) => {
+      switchEl.setAttribute('aria-checked', enabled ? 'true' : 'false')
+    })
+  }
+
+  let listenerController = new AbortController()
+
+  const bindListeners = () => {
+    const { signal } = listenerController
+
+    // Set up listeners for each mapped event
+    Object.entries(eventActionMap).forEach(([eventName, action]) => {
+      document.addEventListener(
+        eventName,
+        ((event: CustomEvent<{ enabled: boolean }>) => {
+          updateSwitchState(action, event.detail.enabled)
+        }) as EventListener,
+        { signal }
+      )
+    })
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', initializePreferenceStates, { signal })
+
+    // Re-sync after Astro view transitions
+    document.addEventListener('astro:page-load', initializePreferenceStates, { signal })
+
+    // Also initialize when launcher opens (preference APIs should be ready by then)
+    document.addEventListener('launcher:open', initializePreferenceStates, { signal })
+  }
+
+  /**
+   * Initialize all preference states
+   */
+  const initializePreferenceStates = () => {
+    if (typeof window.darkMode !== 'undefined') {
+      updateSwitchState('toggle-dark-mode', window.darkMode.isEnabled())
+    }
+    if (typeof window.highContrast !== 'undefined') {
+      updateSwitchState('toggle-high-contrast', window.highContrast.isEnabled())
+    }
+    if (typeof window.reducedMotion !== 'undefined') {
+      updateSwitchState('toggle-reduced-motion', window.reducedMotion.isEnabled())
+    }
+  }
+
+  bindListeners()
+  initializePreferenceStates()
+
+  document.addEventListener('astro:before-swap', () => {
+    listenerController.abort()
+  })
+
+  document.addEventListener('astro:after-swap', () => {
+    listenerController = new AbortController()
+    bindListeners()
+    initializePreferenceStates()
+  })
+</script>
+
+<style>
+  :where(.launcher-switch) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--launcher-space-sm);
+    transition:
+      background-color var(--launcher-animation-duration) var(--launcher-animation-timing),
+      translate var(--launcher-animation-duration) var(--launcher-animation-timing);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--launcher-radius-md);
+    background-color: transparent;
+    padding: var(--launcher-space-xs) var(--launcher-space-sm);
+    inline-size: 100%;
+    scroll-margin-block-start: calc(var(--launcher-space-xl) + var(--launcher-space-sm));
+    color: var(--launcher-text-color);
+    font-family: inherit;
+    text-align: start;
+  }
+
+  :where(.launcher-switch[data-active]),
+  :where(.launcher-switch:hover),
+  :where(.launcher-switch:focus-visible) {
+    translate: 0 -2px;
+    background-color: var(--launcher-interaction-color);
+  }
+
+  :where(.launcher-switch:focus-visible) {
+    outline: 2px solid var(--launcher-text-color);
+    outline-offset: 2px;
+  }
+
+  :where(.launcher-switch[data-active]) .type {
+    opacity: 1;
+  }
+
+  :where(.text) {
+    display: flex;
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  :where(.label) {
+    overflow: hidden;
+    font-size: var(--launcher-font-size-lg);
+    line-height: var(--launcher-line-height);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :where(.type) {
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity var(--launcher-animation-duration) var(--launcher-animation-timing);
+    font-size: var(--launcher-font-size-sm);
+    text-transform: uppercase;
+  }
+
+  :where(.launcher-switch:hover) .type,
+  :where(.launcher-switch:focus-visible) .type {
+    opacity: 1;
+  }
+
+  /* LED Indicator */
+  :where(.led) {
+    display: block;
+    position: relative;
+    flex-shrink: 0;
+    transition:
+      background-color var(--launcher-animation-duration) var(--launcher-animation-timing),
+      box-shadow var(--launcher-animation-duration) var(--launcher-animation-timing);
+    margin-block-start: -1px;
+    border: 1px solid hsl(0deg 0% 0% / 0.25);
+    border-radius: 50%;
+    background: hsl(0deg 0% 40%);
+    inline-size: 14px;
+    block-size: 14px;
+  }
+
+  /* Glossy highlight reflection */
+  :where(.led)::after {
+    position: absolute;
+    transform: rotate(-45deg);
+    inset-block-start: 12%;
+    inset-inline-start: 18%;
+    border-radius: 50%;
+    background: hsl(0deg 0% 100% / 0.85);
+    inline-size: 35%;
+    block-size: 20%;
+    pointer-events: none;
+    content: '';
+  }
+
+  /* Dim highlight when LED is off */
+  :where(.launcher-switch[aria-checked='false']) .led::after {
+    opacity: 0.2;
+  }
+
+  :where(.launcher-switch[aria-checked='true']) .led {
+    box-shadow:
+      inset 0px 1px 2px hsl(140deg 80% 75% / 0.6),
+      inset 0px -1px 2px hsl(140deg 100% 20% / 0.4),
+      0px 0px 4px hsl(140deg 80% 45%),
+      0px 0px 12px hsl(140deg 80% 50% / 0.7),
+      0px 0px 24px hsl(140deg 80% 60% / 0.7);
+    border-color: hsl(150, 5%, 8%);
+    background: radial-gradient(
+      circle at 50% 70%,
+      hsl(140deg 80% 70%) 0%,
+      hsl(140deg 75% 55%) 50%,
+      hsl(140deg 70% 40%) 100%
+    );
+  }
+
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    :where(.launcher-switch),
+    :where(.type),
+    :where(.led) {
+      transition: none;
+    }
+
+    :where(.launcher-switch[data-active]),
+    :where(.launcher-switch:hover),
+    :where(.launcher-switch:focus-visible) {
+      translate: 0 0;
+    }
+  }
+</style>

@@ -1,0 +1,338 @@
+---
+import Logo from './Logo.astro'
+import NavigationItems from './NavigationItems.astro'
+import { DarkMode, HighContrast, ReducedMotion } from 'accessible-astro-components'
+import { LauncherTrigger } from 'accessible-astro-launcher'
+import themeConfig from '@theme-config'
+import { Icon } from 'astro-icon/components'
+---
+
+<div class="drawer-side z-40">
+  <label for="main-drawer" aria-label="Close navigation" class="drawer-overlay"></label>
+  <aside id="site-sidebar" class="bg-base-200 flex min-h-full w-80 flex-col p-4" aria-label="Site navigation">
+    <div class="mb-6">
+      <Logo />
+    </div>
+
+    <nav id="sidebar-navigation" class="flex-1" aria-label="Main navigation">
+      <NavigationItems />
+    </nav>
+
+    <div class="border-base-300 mt-auto flex flex-col gap-4 border-t pt-4">
+      <div hidden>
+        <HighContrast />
+        <ReducedMotion />
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2" aria-label="Accessibility preferences">
+        {
+          themeConfig.navigation.darkmode && (
+            <DarkMode>
+              <Icon aria-hidden="true" name="lucide:moon" slot="light" />
+              <Icon aria-hidden="true" name="lucide:sun" slot="dark" />
+            </DarkMode>
+          )
+        }
+      </div>
+
+      <LauncherTrigger launcherId="site-launcher" compact={true} gradientBorder={true} />
+    </div>
+  </aside>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const drawerToggle = document.querySelector('#main-drawer') as HTMLInputElement | null
+    const drawerButton = document.querySelector('.drawer-button') as HTMLLabelElement | null
+    const sidebarNav = document.querySelector('#sidebar-navigation') as HTMLElement | null
+
+    if (!sidebarNav) return
+
+    const mainMenu = sidebarNav.querySelector('ul') as HTMLUListElement | null
+    const dropdownMenus = [...sidebarNav.querySelectorAll('.has-dropdown button')] as HTMLButtonElement[]
+
+    const isDrawerOpen = (): boolean => drawerToggle?.checked ?? false
+
+    const closeDrawer = (): void => {
+      if (!drawerToggle) return
+      drawerToggle.checked = false
+      drawerButton?.focus()
+    }
+
+    const setActiveMenuItem = (): void => {
+      const currentPathname = window.location.pathname
+      const menuItems = [...sidebarNav.querySelectorAll('a[href]:not([rel*="external"])')] as HTMLAnchorElement[]
+
+      menuItems.forEach((menuItem) => {
+        menuItem.classList.remove('is-active')
+        menuItem.removeAttribute('aria-current')
+
+        if (currentPathname.includes(menuItem.pathname.replaceAll('/', '')) && menuItem.textContent !== 'Home') {
+          menuItem.classList.add('is-active')
+          menuItem.setAttribute('aria-current', 'page')
+        } else if (menuItem.textContent === 'Home' && currentPathname === '/') {
+          menuItem.classList.add('is-active')
+          menuItem.setAttribute('aria-current', 'page')
+        }
+      })
+    }
+
+    const openDropdownMenu = (dropdownMenu: HTMLButtonElement): void => {
+      dropdownMenu.classList.add('show')
+      dropdownMenu.setAttribute('aria-expanded', 'true')
+    }
+
+    const closeDropdownMenu = (dropdownMenu: HTMLButtonElement): void => {
+      dropdownMenu.classList.remove('show')
+      dropdownMenu.setAttribute('aria-expanded', 'false')
+    }
+
+    const closeAllDropdownMenus = (): void => {
+      dropdownMenus.forEach((dropdownMenu) => closeDropdownMenu(dropdownMenu))
+    }
+
+    const toggleDropdownMenu = (event: MouseEvent): void => {
+      const target = event.target as HTMLButtonElement
+      if (target.getAttribute('aria-expanded') === 'false') {
+        closeAllDropdownMenus()
+        openDropdownMenu(target)
+      } else {
+        closeDropdownMenu(target)
+      }
+    }
+
+    if (mainMenu) {
+      mainMenu.addEventListener('keydown', (event: KeyboardEvent) => {
+        const element = event.target as Element
+        const currentMenuItem = element.closest('li')
+        const menuItems = [...mainMenu.querySelectorAll('.menu-item')] as HTMLLIElement[]
+        const currentDropdownMenu = element.closest('.has-dropdown button') as HTMLButtonElement | null
+        const currentDropdownMenuItem = element.closest('.has-dropdown li') as HTMLLIElement | null
+        const currentIndex = currentMenuItem ? menuItems.findIndex((item) => item === currentMenuItem) : -1
+
+        const key = event.key
+        let targetItem: Element | null = null
+
+        if (key === 'ArrowDown') {
+          if (currentMenuItem && menuItems.indexOf(currentMenuItem as HTMLLIElement) === menuItems.length - 1) {
+            targetItem = menuItems[0]
+          } else if (currentMenuItem) {
+            targetItem = menuItems[currentIndex + 1]
+          }
+        }
+
+        if (key === 'ArrowUp') {
+          if (currentMenuItem && menuItems.indexOf(currentMenuItem as HTMLLIElement) === 0) {
+            targetItem = menuItems[menuItems.length - 1]
+          } else if (currentMenuItem) {
+            targetItem = menuItems[currentIndex - 1]
+          }
+        }
+
+        if (key === 'Escape') {
+          if (currentDropdownMenu) {
+            closeDropdownMenu(currentDropdownMenu)
+            targetItem = currentDropdownMenu.parentElement
+          } else if (isDrawerOpen()) {
+            closeDrawer()
+          }
+        }
+
+        if (currentDropdownMenu) {
+          const nextElement = currentDropdownMenu.nextElementSibling as Element | null
+          if (nextElement) {
+            const firstDropdownItem = nextElement.querySelector('li')
+
+            if (key === 'ArrowDown') {
+              event.preventDefault()
+              openDropdownMenu(currentDropdownMenu)
+              targetItem = firstDropdownItem
+            }
+          }
+        }
+
+        if (currentDropdownMenuItem) {
+          const currentDropdownList = currentDropdownMenuItem.parentNode as Element | null
+          if (currentDropdownList) {
+            const dropdownMenuItems = [...currentDropdownList.querySelectorAll('li')] as HTMLLIElement[]
+            const dropdownIndex = dropdownMenuItems.findIndex((item) => item === currentDropdownMenuItem)
+
+            if (key === 'ArrowDown') {
+              event.preventDefault()
+              targetItem =
+                dropdownMenuItems.indexOf(currentDropdownMenuItem) === dropdownMenuItems.length - 1
+                  ? dropdownMenuItems[0]
+                  : dropdownMenuItems[dropdownIndex + 1]
+            }
+
+            if (key === 'ArrowUp') {
+              event.preventDefault()
+              targetItem =
+                dropdownMenuItems.indexOf(currentDropdownMenuItem) === 0
+                  ? dropdownMenuItems[dropdownMenuItems.length - 1]
+                  : dropdownMenuItems[dropdownIndex - 1]
+            }
+
+            if (key === 'Escape') {
+              const parentDropdownMenu = currentDropdownList.previousElementSibling as HTMLButtonElement | null
+              if (parentDropdownMenu) {
+                targetItem = parentDropdownMenu.parentElement
+                closeAllDropdownMenus()
+              }
+            }
+
+            if (key === 'Tab') {
+              const parentDropdownMenu = currentDropdownList.previousElementSibling as HTMLButtonElement | null
+              if (
+                parentDropdownMenu &&
+                dropdownMenuItems.indexOf(currentDropdownMenuItem) === dropdownMenuItems.length - 1
+              ) {
+                closeDropdownMenu(parentDropdownMenu)
+              }
+            }
+          }
+        }
+
+        if (targetItem) {
+          const focusableElement = targetItem.querySelector('a, button, input') as HTMLElement | null
+          focusableElement?.focus()
+        }
+      })
+    }
+
+    dropdownMenus.forEach((dropdownMenu) => {
+      dropdownMenu.addEventListener('click', toggleDropdownMenu)
+    })
+
+    setActiveMenuItem()
+
+    window.addEventListener('click', (event: MouseEvent) => {
+      const element = event.target as Element
+      if (!element.hasAttribute('aria-haspopup') && !element.classList.contains('submenu-item')) {
+        closeAllDropdownMenus()
+      }
+    })
+
+    drawerToggle?.addEventListener('change', () => {
+      if (!drawerToggle.checked) return
+      const firstLink = sidebarNav.querySelector('a, button') as HTMLElement | null
+      firstLink?.focus()
+    })
+
+    document.addEventListener('keydown', (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || !isDrawerOpen()) return
+      const isLargeScreen = window.matchMedia('(min-width: 1024px)').matches
+      if (isLargeScreen) return
+      event.preventDefault()
+      closeDrawer()
+    })
+
+    sidebarNav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        const isLargeScreen = window.matchMedia('(min-width: 1024px)').matches
+        if (!isLargeScreen) closeDrawer()
+      })
+    })
+  })
+</script>
+
+<style lang="scss" is:global>
+  @use 'scss/base/mixins' as *;
+
+  #sidebar-navigation {
+    a,
+    button {
+      color: var(--foreground-color);
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2xs);
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .menu-item {
+      a,
+      button {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2xs);
+        border-radius: var(--radius-l);
+        padding: var(--space-2xs) var(--space-xs);
+        inline-size: 100%;
+        text-align: start;
+      }
+
+      a:hover,
+      a:focus-visible,
+      .is-active,
+      button[aria-expanded='true'],
+      .has-dropdown > button:hover,
+      .has-dropdown > button:focus-visible {
+        text-decoration: underline;
+        text-decoration-style: wavy;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 4px;
+      }
+
+      .is-active {
+        font-weight: bold;
+      }
+    }
+
+    .has-dropdown {
+      > button svg {
+        transition: transform var(--animation-speed-instant) var(--cubic-bezier);
+      }
+
+      > button.show svg {
+        transform: rotate(180deg);
+      }
+
+      .dropdown-menu {
+        display: none;
+        flex-direction: column;
+        gap: var(--space-3xs);
+        margin-block-start: var(--space-3xs);
+        margin-inline-start: var(--space-s);
+        list-style-type: none;
+        padding: 0;
+      }
+
+      > button.show ~ .dropdown-menu {
+        display: flex;
+      }
+    }
+
+    .darkmode-toggle {
+      border: none;
+      padding: 0;
+
+      .icon {
+        inline-size: 30px;
+        block-size: 30px;
+      }
+
+      &:where(:hover, :focus-visible) {
+        box-shadow: none;
+      }
+
+      &:focus {
+        @include outline;
+
+        &:not(:focus-visible) {
+          outline: none;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .drawer-side > :not(.drawer-overlay) {
+      transition: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { Link } from 'accessible-astro-components'
+
+interface Props {
+  project: CollectionEntry<'projects'>['data']
+}
+
+const { project } = Astro.props
+---
+
+{project.displayMode === 'embed' && (
+  <div class="aspect-video w-full overflow-hidden rounded-box">
+    <iframe
+      src={`https://itch.io/embed/${project.itchId}?border_width=0`}
+      title={`Play ${project.title}`}
+      class="h-full w-full"
+      allowfullscreen
+      loading="lazy"
+    />
+  </div>
+)}
+
+{project.displayMode === 'media' && (
+  <div class="aspect-video w-full overflow-hidden rounded-box bg-base-300">
+    <video
+      class="h-full w-full object-cover"
+      src={project.videoUrl}
+      controls
+      preload="metadata"
+      title={`${project.title} trailer`}
+    />
+  </div>
+)}
+
+{project.displayMode === 'link' && (
+  <div class="flex justify-center py-8">
+    <Link href={project.externalUrl} isExternal isButton>
+      Play on store
+    </Link>
+  </div>
+)}
+
+{
+  project.skills.length > 0 && (
+    <div class="mt-4 flex flex-wrap gap-2">
+      {project.skills.map((skill) => (
+        <span class="badge badge-outline">{skill}</span>
+      ))}
+    </div>
+  )
+}

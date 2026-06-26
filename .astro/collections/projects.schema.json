@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "displayMode": {
+          "type": "string",
+          "const": "embed"
+        },
+        "itchId": {
+          "type": "string"
+        },
+        "skills": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "displayMode",
+        "itchId"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "displayMode": {
+          "type": "string",
+          "const": "media"
+        },
+        "videoUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "skills": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "displayMode",
+        "videoUrl"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "displayMode": {
+          "type": "string",
+          "const": "link"
+        },
+        "externalUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "skills": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "displayMode",
+        "externalUrl"
+      ]
+    }
+  ]
+}
