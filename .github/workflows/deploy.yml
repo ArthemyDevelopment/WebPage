@@ -1,8 +1,9 @@
 name: Deploy Astro site to Pages
 
 on:
+  # Deploy only from the portfolio remake branch (not main)
   push:
-    branches: [main, master, RemakePortfolio]
+    branches: [RemakePortfolio]
   workflow_dispatch:
 
 permissions:
