@@ -1,6 +1,7 @@
 import { defineThemeConfig } from '@utils/defineThemeConfig'
 import previewImage from '@assets/img/social-preview-image.png'
 import logoImage from '@assets/img/logo.svg'
+import {Icon} from 'astro-icon/components'
 
 export default defineThemeConfig({
   name: 'Accessible Astro',
@@ -27,17 +28,17 @@ export default defineThemeConfig({
         label: 'Home',
         href: '/',
       },
-      {
+      /*{
         type: 'link',
         label: 'Blog',
         href: '/blog',
-      },
+      },*/
       {
         type: 'link',
         label: 'Portfolio',
         href: '/portfolio',
       },
-      {
+      /*{
         label: 'Features',
         type: 'dropdown',
         items: [
@@ -74,7 +75,7 @@ export default defineThemeConfig({
             href: '/sitemap',
           },
         ],
-      },
+      },*/
       {
         type: 'link',
         label: 'Contact',
@@ -82,15 +83,31 @@ export default defineThemeConfig({
       },
       {
         type: 'link',
-        label: 'Go to our GitHub page, opens in new tab',
-        href: 'https://github.com/incluud/accessible-astro-starter',
-        icon: 'lucide:github',
+        label: 'Portfolio',
+        href: 'https://arthemy.itch.io',
+        icon: 'fa6-brands:itch-io',
+        external: true,
+        excludeFromLauncher: true,
+      },
+      {
+        type: 'link',
+        label: 'GitHub repos',
+        href: 'https://github.com/arthemydevelopment',
+        icon: 'fa6-brands:github',
+        external: true,
+        excludeFromLauncher: true,
+      },
+      {
+        type: 'link',
+        label: 'LinkedIn',
+        href: 'https://www.linkedin.com/in/arthemy/',
+        icon: 'fa6-brands:linkedin',
         external: true,
         excludeFromLauncher: true,
       },
     ],
   },
-  socials: [
+  /*socials: [
     {
       label: 'GitHub',
       href: 'https://github.com/incluud/',
@@ -106,5 +123,5 @@ export default defineThemeConfig({
       href: 'https://opencollective.com/incluud',
       icon: 'lucide:hand-heart',
     },
-  ],
+  ],*/
 })
