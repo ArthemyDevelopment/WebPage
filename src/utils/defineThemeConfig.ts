@@ -49,27 +49,29 @@ export type ThemeConfig = {
   navigation: {
     darkmode?: boolean
     items: NavigationItem[]
+    externalItems?: NavigationItem[]
   }
   socials?: SocialItem[]
 }
 
 const defaultConfig: Omit<ThemeConfig, 'name' | 'id'> = {
   seo: {
-    title: 'My Astro Site',
+    title: 'Matías Mellado',
     subtitle: '',
-    description: 'A website built with Accessible Astro Starter',
+    description: 'Portfolio',
     author: '',
     image: null,
   },
   colors: {
-    primary: '#d648ff',
-    secondary: '#00d1b7',
+    primary: '#4D179A',
+    secondary: '#8E51FF',
     neutral: '#b9bec4',
     outline: '#ff4500',
   },
   navigation: {
     darkmode: true,
     items: [],
+    externalItems: [],
   },
   socials: [],
 }
@@ -92,3 +94,4 @@ export function defineThemeConfig(config: ThemeConfig): ThemeConfig {
     },
   }
 }
+

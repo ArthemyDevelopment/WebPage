@@ -8,11 +8,16 @@ import { Icon } from 'astro-icon/components'
  *
  * @description Vertical navigation links for the sidebar drawer
  */
+interface Props {
+  items: any[]
+}
+
+const { items } = Astro.props
 ---
 
 <ul class="menu menu-vertical">
   {
-    themeConfig.navigation.items.map((item) => (
+    items.map((item) => (
       <li
         class={`menu-item ${item.type === 'dropdown' ? 'has-dropdown' : ''} ${item.icon ? 'type-icon' : ''}`}
       >
@@ -48,3 +53,4 @@ import { Icon } from 'astro-icon/components'
     ))
   }
 </ul>
+
