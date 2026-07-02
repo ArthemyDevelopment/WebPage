@@ -63,8 +63,8 @@ const defaultConfig: Omit<ThemeConfig, 'name' | 'id'> = {
     image: null,
   },
   colors: {
-    primary: '#4D179A',
-    secondary: '#8E51FF',
+   primary: '#007979',
+    secondary: '#FFCF95',
     neutral: '#b9bec4',
     outline: '#ff4500',
   },

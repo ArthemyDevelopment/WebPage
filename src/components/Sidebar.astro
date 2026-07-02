@@ -9,7 +9,7 @@ import { Icon } from 'astro-icon/components'
 
 <div class="drawer-side z-40">
   <label for="main-drawer" aria-label="Close navigation" class="drawer-overlay"></label>
-  <aside id="site-sidebar" class="flex min-h-full w-60 flex-col pt-4 bg-emerald-300 dark:bg-teal-800" aria-label="Site navigation">
+  <aside id="site-sidebar" class="flex min-h-full w-60 flex-col pt-4 bg-[#24B1B1] dark:bg-[#333D6D]" aria-label="Site navigation">
     <!-- 
     <div class="mb-6">
       <Logo />
@@ -27,7 +27,7 @@ import { Icon } from 'astro-icon/components'
     </nav>
 
     <!-- External Navigation (Icons Row) -->
-    <div class="flex gap-4 p-4 border-t border-zinc-700 dark:border-zinc-700 justify-center">
+    <div class="flex gap-4 p-4 border-t bg-[#FFE0C5] dark:bg-[#723eb3] border-zinc-700 dark:border-zinc-700 justify-center">
       {themeConfig.navigation.externalItems?.map((item) => (
         <a href={item.href} target="_blank" rel="noopener noreferrer" class="hover:opacity-75" aria-label={item.label}>
           <Icon name={item.icon} size="32" />
@@ -264,7 +264,7 @@ import { Icon } from 'astro-icon/components'
     .menu {
       display: flex;
       flex-direction: column;
-      gap: var(--space-2xs);
+      gap: var(--space-4xs);
       list-style-type: none;
       padding: 0;
       align-items: center;
@@ -281,8 +281,8 @@ import { Icon } from 'astro-icon/components'
       button {
         display: flow;
         align-items: center;
-        gap: var(--space-2xs);
-        border-radius: var(--radius-l);
+        gap: var(--space-5xs);
+        border-radius: var(--radius-s);
         padding: var(--space-2xs) var(--space-xs);
 
         background-color: rgba(255,255,255, 0.4);

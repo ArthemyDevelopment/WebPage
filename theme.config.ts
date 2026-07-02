@@ -15,8 +15,8 @@ export default defineThemeConfig({
     image: previewImage, // Can also be a string e.g. '/social-preview-image.png',
   },
   colors: {
-    primary: '#4D179A',
-    secondary: '#8E51FF',
+    primary: '#007979',
+    secondary: '#FFCF95',
     neutral: '#b9bec4',
     outline: '#ff4500',
   },
