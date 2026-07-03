@@ -62,7 +62,7 @@ const { page, uniqueTags } = Astro.props
       <div class="flex flex-wrap gap-4">
         {
           uniqueTags.map((tag: { label: string; slug: string }) => (
-            <Link href={'/portfolio/tag/' + tag.slug}>{tag.label}</Link>
+            <Link href={'/projects/tag/' + tag.slug}>{tag.label}</Link>
           ))
         }
       </div>
@@ -75,7 +75,7 @@ const { page, uniqueTags } = Astro.props
             <li>
               <Card
                 imageComponent={project.featuredImage}
-                url={'/portfolio/' + project.id}
+                url={'/projects/' + project.id}
                 title={project.data.title}
                 headingLevel="h2"
                 footer={'Skills: ' + project.data.skills.join(', ')}
@@ -96,13 +96,13 @@ const { page, uniqueTags } = Astro.props
         page && page.lastPage > 1 && (
           <div class="mt-12 grid place-content-center">
             <Pagination
-              firstPage={page.url.prev ? '/portfolio' : null}
+              firstPage={page.url.prev ? '/projects' : null}
               previousPage={page.url.prev ? page.url.prev : null}
               nextPage={page.url.next ? page.url.next : null}
-              lastPage={page.url.next ? `/portfolio/${page.lastPage}` : null}
+              lastPage={page.url.next ? `/projects/${page.lastPage}` : null}
               currentPage={`${page.currentPage}`}
               totalPages={`${page.lastPage}`}
-              ariaLabel="Portfolio pagination"
+              ariaLabel="Projects pagination"
             />
           </div>
         )
@@ -110,3 +110,21 @@ const { page, uniqueTags } = Astro.props
     </div>
   </section>
 </DefaultLayout>
+
+<style>
+  :global(nav.pagination .list) {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  :global(nav.pagination .list li) {
+    display: flex;
+    align-items: center;
+  }
+</style>

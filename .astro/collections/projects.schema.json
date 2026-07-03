@@ -23,12 +23,16 @@
         },
         "description": {
           "type": "string"
+        },
+        "featuredImage": {
+          "type": "string"
         }
       },
       "required": [
         "title",
         "displayMode",
-        "itchId"
+        "itchId",
+        "featuredImage"
       ]
     },
     {
@@ -54,12 +58,16 @@
         },
         "description": {
           "type": "string"
+        },
+        "featuredImage": {
+          "type": "string"
         }
       },
       "required": [
         "title",
         "displayMode",
-        "videoUrl"
+        "videoUrl",
+        "featuredImage"
       ]
     },
     {
@@ -85,12 +93,16 @@
         },
         "description": {
           "type": "string"
+        },
+        "featuredImage": {
+          "type": "string"
         }
       },
       "required": [
         "title",
         "displayMode",
-        "externalUrl"
+        "externalUrl",
+        "featuredImage"
       ]
     }
   ]

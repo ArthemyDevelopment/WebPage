@@ -1,1 +1,10 @@
-export default new Map();
+
+import __ASTRO_IMAGE_IMPORT_EyeKU from "./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-01%2Findex.mdx";
+import __ASTRO_IMAGE_IMPORT_jmBby from "./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-02%2Findex.mdx";
+import __ASTRO_IMAGE_IMPORT_Z1O1nN from "./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-03%2Findex.mdx";
+import __ASTRO_IMAGE_IMPORT_Zn0DXa from "./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-04%2Findex.mdx";
+import __ASTRO_IMAGE_IMPORT_ZIchxw from "./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-05%2Findex.mdx";
+import __ASTRO_IMAGE_IMPORT_Z14nU7S from "./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-06%2Findex.mdx";
+import __ASTRO_IMAGE_IMPORT_Z1pzxHf from "./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-07%2Findex.mdx";
+export default new Map([["./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-01%2Findex.mdx", __ASTRO_IMAGE_IMPORT_EyeKU], ["./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-02%2Findex.mdx", __ASTRO_IMAGE_IMPORT_jmBby], ["./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-03%2Findex.mdx", __ASTRO_IMAGE_IMPORT_Z1O1nN], ["./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-04%2Findex.mdx", __ASTRO_IMAGE_IMPORT_Zn0DXa], ["./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-05%2Findex.mdx", __ASTRO_IMAGE_IMPORT_ZIchxw], ["./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-06%2Findex.mdx", __ASTRO_IMAGE_IMPORT_Z14nU7S], ["./featuredImage.png?astroContentImageFlag=&importer=src%2Fcontent%2Fprojects%2Fproject-07%2Findex.mdx", __ASTRO_IMAGE_IMPORT_Z1pzxHf]]);
+		

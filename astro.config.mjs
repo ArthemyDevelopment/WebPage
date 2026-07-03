@@ -40,15 +40,10 @@ const viteConfig = {
 export default defineConfig({
   compressHTML: true,
   site: 'https://accessible-astro-starter.incluud.dev',
-  integrations: [compress(), icon({
+    integrations: [compress(), icon({
       include: {
         'lucide:*': ['*'],
         'fa6-brands:*': ['*'],
-         'local:*': ['*'],
-      },
-      // Register local icons directory
-      local: {
-        dir: './src/assets/icons',
       },
     }), mdx(), sitemap()],
   vite: enhanceConfigForWorkspace(viteConfig),

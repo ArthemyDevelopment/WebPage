@@ -12,6 +12,7 @@ interface Props {
    * The icon to display
    */
   icon?: string
+  iconComponent?: any
   image?: string
   /**
    * The title to display
@@ -24,7 +25,7 @@ interface Props {
   level?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
 
-const { icon = 'mdi:rocket', image,title = 'Title', level = 'h3' }: Props = Astro.props
+const { icon = 'mdi:rocket', iconComponent: IconComponent, image, title = 'Title', level = 'h3' }: Props = Astro.props
 ---
 
 <div class="feature flex flex-col gap-4">
@@ -36,15 +37,19 @@ const { icon = 'mdi:rocket', image,title = 'Title', level = 'h3' }: Props = Astr
       aria-hidden="true"
       class="feature-image"
     />
+  ) : IconComponent ? (
+    <IconComponent
+      aria-hidden="true"
+      class="feature-image text-[var(--link-color)]"
+    />
   ) : (
     <Icon aria-hidden="true" name={icon} />
   )
 }
   <div class="content">
     <Heading level={level} size="h6" class="mb-2">{title}</Heading>
-    <p>
-      <slot>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, corporis.</slot>
-    </p>
+    <div class="feature-content">
+    <slot />
   </div>
 </div>
 
@@ -55,6 +60,10 @@ const { icon = 'mdi:rocket', image,title = 'Title', level = 'h3' }: Props = Astr
     position: relative;
     padding: var(--space-l);
     inline-size: calc(100% - var(--space-l));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
 
     > * {
       position: relative;
@@ -86,7 +95,30 @@ const { icon = 'mdi:rocket', image,title = 'Title', level = 'h3' }: Props = Astr
       border-radius: var(--radius-l);
       background-color: var(--link-color);
     }
+
+    
   }
+
+  .content{
+    width: 100%;
+  }
+
+  .content > :first-child {
+  font-size: x-large;
+  text-align: center;
+  padding-bottom: var(--space-s);
+  padding-top: var(--space-s);
+  }
+
+  .feature-content {
+    text-align: left;
+    font-size: small;
+  }
+
+  .feature-content li {
+  list-style: disclosure-closed;
+
+}
 
   :global(.feature [data-icon]) {
     inline-size: 4rem;
@@ -94,10 +126,73 @@ const { icon = 'mdi:rocket', image,title = 'Title', level = 'h3' }: Props = Astr
     color: var(--link-color);
   }
 
+  :global(.skills-grid) {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+:global(.skills-grid .secondary) {
+  border-left: 2px dashed var(--color-neutral-400);
+  padding-left: 1rem;
+}
+
+  :global(.skills-grid h4) {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 1.15rem;
+    text-align: center;
+  }
+  :global(.skills-grid h5) {
+  font-weight: bold;
+  margin-bottom: 0.15rem;
+  font-size: 0.75rem;
+}
+
+:global(.skills-grid ul) {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+:global(.skills-grid li) {
+  margin-bottom: 0.15rem;
+}
+
+@media (max-width: 800px) {
+  :global(.skills-grid) {
+    grid-template-columns: 1fr;
+  }
+
+  :global(.skills-grid .secondary) {
+    border-left: none;
+    border-top: 2px dashed var(--color-neutral-400);
+    padding-left: 0;
+    padding-top: 1rem;
+  }
+}
+
   .feature-image {
-  inline-size: 4rem;
+  inline-size: 5rem;
+  display: stretch;
+  align-items: center;
+  justify-content: center;
   block-size: auto;
   object-fit: contain;
+  color: var(--link-color);
+}
+
+
+.feature-image :global(svg) {
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  fill: currentColor;
+  align-items: center;
+}
+
+.feature-image :global(path) {
+  fill: currentColor;
 }
 
   :global(.darkmode .feature::before) {

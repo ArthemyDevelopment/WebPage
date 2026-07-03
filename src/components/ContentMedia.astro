@@ -16,19 +16,38 @@ interface Props {
    * @default false
    */
   reverseImg?: boolean
+  imgHref?: string 
+  imgTarget?: "_blank" | "_self" 
 }
 
-const { imgSrc, reverseImg = false }: Props = Astro.props
+const { imgSrc, reverseImg = false, imgHref, imgTarget }: Props = Astro.props
 ---
 
-<section class="my-64">
+
+<section class="my-48">
   <div class="container">
-    <div class="grid grid-cols-1 gap-24 md:grid-cols-2">
-      {!reverseImg ? <Media class="rounded-lg" src={imgSrc} /> : ''}
+    <div class="grid grid-cols-1 gap-x-12 md:grid-cols-2">
+      {!reverseImg ? (
+  imgHref ? (
+    <a href={imgHref} target={imgTarget} rel={imgTarget === "_blank" ? "noopener noreferrer" : undefined}>
+      <Media class="rounded-xl" src={imgSrc} />
+    </a>
+  ) : (
+    <Media class="rounded-xl" src={imgSrc} />
+  )
+) : ''}
       <div class="space-content flex flex-col justify-center">
         <slot />
       </div>
-      {reverseImg ? <Media class="rounded-lg" src={imgSrc} /> : ''}
+      {reverseImg ? (
+  imgHref ? (
+    <a href={imgHref} target={imgTarget} rel={imgTarget === "_blank" ? "noopener noreferrer" : undefined}>
+      <Media class="rounded-xl" src={imgSrc} />
+    </a>
+  ) : (
+    <Media class="rounded-xl" src={imgSrc} />
+  )
+) : ''}
     </div>
   </div>
 </section>

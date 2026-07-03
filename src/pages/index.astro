@@ -8,69 +8,194 @@ import FeaturedProjects from '@components/FeaturedProjects.astro'
 import FeaturedPosts from '@components/FeaturedPosts.astro'
 import { Accordion, AccordionItem, Avatar, AvatarGroup, Heading, Link } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
+import QualitiesIcon from '@assets/icons/qualities.svg';
+import HobiesIcon from '@assets/icons/hobbies.svg';
+import SkillsIcon from '@assets/icons/skills.svg';
+import SoftwareIcon from '@assets/icons/software.svg';
 ---
 
 <DefaultLayout title="Portfolio Matías Mellado" useTitleTemplate={false}>
   <Hero />
   <section class="my-64">
     <div class="container">
-      <Heading level="h2" class="mb-8">About Me</Heading>
-      <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
-        <Feature icon="local:qualities" title="Qualities">
-          <li>Strong under pressure</li>
-          <li>Punctual and reliable</li>
-          <li>Proactive mindset</li>
-          <li>Fast learner</li>
-          <li>Creative thinker</li>
+      <Heading level="h3" class="mb-8">About Me</Heading>
+          <div class="desc">
+              Hi!, my name is Matías Mellado but on the internet I use the nickname Arthemy.
+              <br>I'm a Technical Game Designer and Senior Unity Developer with a B.A. in Digital Game Design graduated Magna Cum Laude from Universidad Andrés Bello (UNAB) in Chile and a M.Ed in Higher Education Teaching from Universidad Andrés Bello (UNAB) in Chile Graduated Suma Cum Laude.
+              <br><br>My roles have allowed me to bridge the gap between creative vision and technical implementation, with experience in tool development, gameplay systems and leading interdisciplinary teams.
+              I'm passionate about crafting engaging experiences and mentoring other in this game development journey of ours.
+              I also have skills in other areas such as 3D ( modelling, texturing and animation), video editing, adobe suit (Premiere, After Effects, Photoshop, 
+              Illustrator) and some experience in project management.
+              <br><br>
+              I've been working with Unity since 2017 (since 2019 professionally) and worked on 2 published games as well as 1 educational mobile app. I've been
+              teaching Unity and game design as a college professor since 2020. As a hobby I've constantly been involved in quick and small prototype developments in multiple 
+              game jams throughout the years.
+              <br><br>
+              In this portfolio I compile and highlight some of the things I consider relevant about me on a professional level, such as different skills and knowledge, projects 
+              I have worked on, and different recognitions, certificates and diplomas.
+            </div>
+      <div class="grid grid-cols-1 gap-y-16 gap-x-8 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 ">
+        <Feature iconComponent={QualitiesIcon} title="Proffessional Skills">
+          <ul>
+            <li>Technical Leadership</li>
+            <li>Problem Solving</li>
+            <li>Systems Thinking</li>
+            <li>Cross-functional Communication</li>
+            <li>Creative thinker</li>
+            <li>Adaptability</li>
+            <li>Mentoring & Teaching</li>
+            <li>Team Coordination</li>
+        </ul>
         </Feature>
-        <Feature icon="lucide:puzzle" title="A11Y components">
-          35+ components and counting, all tried and tested for the most optimal accessible experience for your
-          visitors.
+        <Feature iconComponent={SkillsIcon} title="Technical Skills">
+          <div class="skills-grid">
+            <div>
+              <h4>Core</h4>
+              <ul>
+                <li>Game Design</li>
+                <li>Unity Engine</li>
+                <li>C# for Unity</li>
+                <li>Unity Editor Scripting</li>
+                <li>Tools Development</li>
+                <li>Agile Development</li>
+                <li>Git</li>
+              </ul>
+            </div>
+
+            <div class="secondary">
+              <h4>Supporting</h4>
+              <ul>
+                <li>Video Editing</li>
+                <li>3D Modeling</li>
+                <li>3D Texturing</li>
+                <li>3D Animation</li>
+                <li>2D Image Editing</li>
+                <li>2D Animation</li>
+                <li>Vector Ilustration</li>
+                <li>HTML & CSS</li>
+              </ul>
+            </div>
+          </div>
         </Feature>
-        <Feature icon="lucide:moon" title="Dark mode">
-          Fully integrated Dark mode gives your users the choice for their favorite viewing mode.
+        <Feature iconComponent={SoftwareIcon} title="Software">
+          <div class="skills-grid">
+            <div>
+              <h4>Core</h4>
+              <h5>Game Development:</h5>
+              <ul>
+                <li>Unity Engine</li>
+                <li>JetBrains Rider(main IDE)</li>
+                <li>Git interfaces (GitHub, GitKraken, SourceTree)</li>
+              </ul>
+              <h5>Productivity:</h5>
+              <ul>
+                <li>Google Drive suit</li>
+                <li>Office Suit</li>
+                <li>Miro</li>
+              </ul>
+            </div>
+
+            <div class="secondary">
+              <h4>Supporting</h4>
+              <h5>Code:</h5>
+              <ul>
+                <li>Visual Studio</li>
+                <li>VS Code</li>
+              </ul>
+              <h5>Media:</h5>
+              <ul>
+                <li>Davinci Resolve</li>
+                <li>Adobe Premiere</li>
+                <li>Adobe After Effects</li>
+              </ul>
+              <h5>3D Modeling:</h5>
+              <ul>
+                <li>Blender</li>
+                <li>Substance Painter</li>
+              </ul>
+              <h5>2D Design:</h5>
+              <ul>
+                <li>Affinity</li>
+                <li>Adobe Photoshop</li>
+                <li>Adobe Illustrator</li>
+              </ul>
+              <h5>Audio:</h5>
+              <ul>
+                <li>Adobe Audition</li>
+                <li>Reaper</li>
+                <li>Audacity</li>
+              </ul>
+            </div>
+          </div>
         </Feature>
-        <Feature icon="lucide:paintbrush" title="Tailwind 4.0">
-          Use the power of Tailwind to greatly improve your productivity and enhance your developer workflow.
-        </Feature>
-        <Feature icon="lucide:sparkles" title="Prettier">
-          Less worry about formatting your code, let the Astro Prettier integration do the heavy lifting.
-        </Feature>
-        <Feature icon="lucide:code" title="ESLint">
-          Lint your code with strict a11y settings to ensure you stay on track with the WCAG standards.
-        </Feature>
-        <Feature icon="lucide:bookmark" title="Blog & portfolio">
-          This theme comes with a fully integrated blog and portfolio, dynamic pages and SEO optimization.
-        </Feature>
-        <Feature icon="lucide:file-text" title="Markdown & MDX">
-          Easily use .md and .mdx pages to build your websites or use it with Netlify CMS.
-        </Feature>
-        <Feature icon="lucide:blocks" title="Design system">
-          The theme offers some very handy utilities to help you build your website faster.
+        <Feature iconComponent={HobiesIcon} title="Miscellaneous">
+          <div class="skills-grid">
+            <div>
+              <h4>Language</h4>
+              <ul>
+                <li>Spanish - Native</li>
+                <li>English - C2 level</li>
+                <li>French - Basic</li>
+              </ul>
+            </div>
+            <div class="secondary">
+              <h4>Hobbies</h4>
+              <ul>
+                <li>Video games (obviously)</li>
+                <li>HEMA</li>
+                <li>Movies and series</li>
+                <li>Books and comics</li>
+                <li>Chess</li>
+                <li>Tabletop games</li>
+                <li>Model kit building</li>
+                <li>Piano</li>
+              </ul>
+            </div>
+          </div>
         </Feature>
       </div>
     </div>
   </section>
-  <ContentMedia imgSrc="/accessible-components.webp">
-    <Heading level="h2">Accessible components</Heading>
+  <section class="my-0.5">
+    <div class="container">
+      <Heading level="h3" class="mb-8">Professional Experience</Heading>
+    </div>
+  </section>
+  <ContentMedia imgSrc="/assets/images/roles/FundaK.jpg" imgHref="https://fundacioncapital.org/soluciones-digitales/lista/" imgTarget="_blank">
+    <Heading level="h4">Lead 2D Unity Developer and Technical Designer</Heading>
     <p class="text-2xl">
-      This theme provides plenty of tried and tested Accessible Astro Components. Some are native to this theme and a
-      lot of others are integrated using a <Link
-        isExternal
-        href="https://github.com/incluud/accessible-astro-components">separate package</Link
-      >. They'll get you up and running in building an accessible solution for your visitors.
+      Supported multiple educational apps, coordinating cross-team feature delivery. 
+      Assisted in designing learning activities aligned with educational and technical requirements. 
+      Improved internal tools for content integration, optimizing Unity localization and Addressables workflows.
+    <!-- <Link isExternal href="https://play.google.com/store/apps/details?id=org.fundacioncapital.listaplus">View on play store</Link> -->
     </p>
   </ContentMedia>
-  <ContentMedia imgSrc="/wcag-compliant.webp" reverseImg={true}>
-    <Heading level="h2">WCAG 2.2 AA compliant</Heading>
+  <ContentMedia imgSrc="/assets/images/roles/store_capsule_main.png" imgHref="https://store.steampowered.com/app/2268250/Hoping_Forest/" imgTarget="_blank"  reverseImg={true}>
+    <Heading level="h4">3D Unity Developer</Heading>
     <p class="text-2xl">
       Using semantic HTML, landmarks, skip links, screen reader friendly content, aria-labels, keyboard accessible
       navigation and components, clear outlines and tab indicators and the right color contrast, you're more certain of
       reaching WCAG AA compliance.
     </p>
   </ContentMedia>
-  <FeaturedProjects />
-  <FeaturedPosts />
+  <ContentMedia imgSrc="/assets/images/roles/minegeon.png" imgHref="https://kickstonestudio.com/our-games" imgTarget="_blank">
+    <Heading level="h4">Lead 2D Unity Developer and Technical Designer</Heading>
+    <p class="text-2xl">
+      Using semantic HTML, landmarks, skip links, screen reader friendly content, aria-labels, keyboard accessible
+      navigation and components, clear outlines and tab indicators and the right color contrast, you're more certain of
+      reaching WCAG AA compliance.
+    </p>
+  </ContentMedia>
+    <ContentMedia imgSrc="/assets/images/roles/SumaYSigueAula.jpg" imgHref="https://cmmedu.uchile.cl/innovaciones-para-el-aula/recursos-para-el-aula/" imgTarget="_blank" reverseImg={true}>
+    <Heading level="h4">Internship 2D Unity Development</Heading>
+    <p class="text-2xl">
+      Using semantic HTML, landmarks, skip links, screen reader friendly content, aria-labels, keyboard accessible
+      navigation and components, clear outlines and tab indicators and the right color contrast, you're more certain of
+      reaching WCAG AA compliance.
+    </p>
+  </ContentMedia>
+  <FeaturedProjects limit={4} items={["project-01", "project-05", "project-06", "project-07"]} />
+  <!-- <FeaturedPosts /> -->
   <section class="my-64">
     <div class="container grid grid-cols-1 gap-12 md:grid-cols-2">
       <div class="flex flex-col items-start gap-4">
@@ -170,5 +295,14 @@ import { Icon } from 'astro-icon/components'
     border: 1px solid var(--border-color-subtle);
     border-radius: var(--radius-md);
     padding: var(--space-s);
+  }
+
+  .container .desc{
+    font-size: 1rem;
+    text-align: justify;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 20px;
+    
   }
 </style>

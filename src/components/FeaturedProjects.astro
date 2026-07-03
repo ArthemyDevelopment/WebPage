@@ -3,10 +3,6 @@ import { Card, Heading, Link } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import { getCollection } from 'astro:content'
 
-// Import images directly for optimization
-import projectImage1 from '@assets/images/projects/project-image-1.png'
-import projectImage2 from '@assets/images/projects/project-image-2.png'
-import projectImage3 from '@assets/images/projects/project-image-3.png'
 
 /**
  * FeaturedProjects Component
@@ -28,18 +24,22 @@ interface Props {
    * @default "Featured projects"
    */
   title?: string
+
+  items?: string[]
 }
 
-const { class: className, limit = 3, title = 'Featured projects' } = Astro.props
+const { class: className, limit = 3, title = 'Featured projects', items } = Astro.props
 
+const allProjects = await getCollection('projects')
 // Get projects from content collection
-const projects = await getCollection('projects')
-const projectImages = [projectImage1, projectImage2, projectImage3]
+const projects = items 
+  ? allProjects.filter(p => items.includes(p.id)) 
+  : allProjects.slice(0, limit)
 
 // Limit projects and add featured images
 const featuredProjects = projects.slice(0, limit).map((project, index) => ({
   ...project,
-  featuredImage: projectImages[index % projectImages.length],
+  featuredImage: project.data.featuredImage ?? null,
 }))
 ---
 
@@ -50,7 +50,7 @@ const featuredProjects = projects.slice(0, limit).map((project, index) => ({
       {
         featuredProjects.map((project) => (
           <Card
-            imageComponent={project.featuredImage}
+            imageComponent={project.data.featuredImage}
             url={'/portfolio/' + project.id}
             headingLevel="h2"
             title={project.data.title}

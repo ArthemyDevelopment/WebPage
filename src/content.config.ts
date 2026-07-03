@@ -8,13 +8,14 @@ import { glob } from 'astro/loaders'
 // 3. Define your collection(s)
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/projects' }),
-  schema: z.discriminatedUnion('displayMode', [
+  schema: ({image}) =>z.discriminatedUnion('displayMode', [
     z.object({
       title: z.string(),
       displayMode: z.literal('embed'),
       itchId: z.string(),
       skills: z.array(z.string()).default([]),
       description: z.string().optional(),
+      featuredImage: image(),
     }),
     z.object({
       title: z.string(),
@@ -22,6 +23,7 @@ const projects = defineCollection({
       videoUrl: z.string().url(),
       skills: z.array(z.string()).default([]),
       description: z.string().optional(),
+      featuredImage: image(),
     }),
     z.object({
       title: z.string(),
@@ -29,6 +31,7 @@ const projects = defineCollection({
       externalUrl: z.string().url(),
       skills: z.array(z.string()).default([]),
       description: z.string().optional(),
+      featuredImage: image(),
     }),
   ]),
 })
