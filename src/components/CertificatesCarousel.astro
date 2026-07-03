@@ -1,5 +1,5 @@
 ---
-import { Badge, Heading, Button } from 'accessible-astro-components'
+import { Badge, Heading, Link } from 'accessible-astro-components'
 import { Image } from 'astro:assets'
 import { credentials } from '@data/credentials'
 import type { Credential } from '@data/credentials'
@@ -33,6 +33,7 @@ interface Props {
   featuredOnly?: boolean
   /** Render an "All / tag / tag / ..." filter bar above the carousel, built from the resulting items' tags */
   filterable?: boolean
+  carousel?: boolean
   limit?: number
 }
 
@@ -44,6 +45,7 @@ const {
   items,
   featuredOnly = false,
   filterable = false,
+  carousel = true,
   limit,
 } = Astro.props
 
@@ -97,71 +99,107 @@ const slideId = (id: string) => `slide-${id}`
           </div>
         )}
 
-        <div class="carousel carousel-center w-full gap-6">
-          {list.map((credential, index) => {
-            const cardContent = (
-              <Fragment>
+        <div class="relative w-full">
+
+          {carousel && (<button class="btn btn-circle absolute left-0 top-1/2 z-20 -translate-y-1/2" data-nav="prev" aria-label="Previous item">❮</button>)}
+
+          <div class="carousel carousel-center w-full gap-6 scroll-smooth overflow-x-auto" data-carousel>
+            {list.map((credential, index) => {
+              const modalId = `modal-${credential.id}`;
+              // Only the text/info block gets wrapped in the credentialUrl <a>.
+              // The image-modal trigger and the "Verify online" link are kept
+              // as SIBLINGS of that anchor — nesting interactive elements
+              // (button/a) inside another <a> is invalid HTML and causes
+              // unpredictable click behaviour.
+              const cardBody = (
                 <div class="card-body">
                   {/*credential.logo && (
                     <Image src={credential.logo} alt="" width={96} height={96} class="mb-2 h-8 w-8 object-contain" />
                   )*/}
-                  <h3 class="card-title">{credential.title}</h3>
-                  {credential.issuer && (
-                    <p class="text-sm opacity-70">
-                      {credential.issuer}
-                      {credential.date && ` · ${credential.date.getFullYear()}`}
-                    </p>
-                  )}
-                  {credential.description && <p>{credential.description}</p>}
-                  {credential.tags.length > 0 && (
-                    <div class="mt-2 flex flex-wrap gap-2">
-                      {credential.tags.map((tag) => (
-                        <Badge>{capitalize(tag)}</Badge>
-                      ))}
-                    </div>
-                  )}
+                  <div class="card-body-info">
+                    <h3 class="card-title">{credential.title}</h3>
+                    {credential.issuer && (
+                      <p class="text-sm opacity-70">
+                        {credential.issuer}
+                        {credential.date && ` · ${credential.date.getFullYear()}`}
+                      </p>
+                    )}
+                    {credential.description && <p>{credential.description}</p>}
+                    {credential.tags.length > 0 && (
+                      <div class="badges">
+                        {credential.tags.map((tag) => (
+                          <Badge>{capitalize(tag)}</Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <figure>
-                  <Image
-                    src={credential.image}
-                    alt={credential.title}
-                    width={480}
-                    class="w-full h-auto"
-                  />
-                </figure>
-              </Fragment>
-            )
+              )
 
-            return (
-              <div
-                id={slideId(credential.id)}
-                class="carousel-item relative w-full max-w-sm"
-                data-carousel-item
-                data-tags={credential.tags.join('|')}
-              >
-                <div class="card w-full shadow-sm">
-                  {credential.credentialUrl ? (
-                    <a href={credential.credentialUrl} class="contents" aria-label={credential.title} target="_blank" rel="noopener">
-                      {cardContent}
-                    </a>
-                  ) : (
-                    cardContent
-                  )}
+              return (
+                <div
+                  id={slideId(credential.id)}
+                  class="carousel-item relative w-full max-w-sm"
+                  data-carousel-item
+                  data-tags={credential.tags.join('|')}
+                >
+                  <div class="card w-full shadow-sm">
+                    {credential.credentialUrl ? (
+                      <a href={credential.credentialUrl} class="contents" aria-label={credential.title} target="_blank" rel="noopener">
+                        {cardBody}
+                      </a>
+                    ) : (
+                      cardBody
+                    )}
 
-                  {credential.verificationUrl && (
-                    <div class="btn btn-soft">
-                      <Button href={credential.verificationUrl} isExternal>
+                    <button
+                      type="button"
+                      class="w-full h-auto p-0 border-0 bg-transparent cursor-pointer"
+                      data-modal-trigger={modalId}
+                      aria-label={`View full size image of ${credential.title}`}>
+                      <figure>
+                        <Image
+                          src={credential.image}
+                          alt={credential.title}
+                          width={480}
+                          class="w-full h-auto"
+                          />
+                        </figure>
+                    </button>
+
+                    {credential.verificationUrl && (
+                      <Link href={credential.verificationUrl} isExternal class="btn btn-soft w-auto">
                         Verify online
-                      </Button>
-                    </div>
-                  )}
-                </div>
+                      </Link>
+                    )}
+                  </div>
 
-              </div>
-            )
-          })}
+                  <dialog id={modalId} class="modal">
+                    <div class="modal-box w-11/12 max-w-2xl p-2 relative">
+                      <form method="dialog">
+                        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10">✕</button>
+                      </form>
+                      <Image src={credential.image} alt={credential.title} width={1200} class="w-full h-auto" />
+                    </div>
+                    <form method="dialog" class="modal-backdrop">
+                      <button>close</button>
+                    </form>
+                  </dialog>
+                </div>
+              )
+            })}
+          </div>
+
+
+          {carousel && (<button class="btn btn-circle absolute right-0 top-1/2 z-20 -translate-y-1/2" data-nav="next" aria-label="Next item">❯</button>
+
+          <div class="mt-8 w-full max-w-sm mx-auto bg-gray-200 h-2 rounded-full overflow-hidden" data-indicator>
+            <div class="bg-primary h-full w-0 transition-all duration-300 progress-fill"></div>
+          </div>)}
+
         </div>
-      </div>
+
+      </div>  
     </section>
   )
 }
@@ -171,10 +209,38 @@ const slideId = (id: string) => `slide-${id}`
   document.querySelectorAll<HTMLElement>('[data-carousel-section]').forEach((section) => {
     const buttons = section.querySelectorAll<HTMLButtonElement>('[data-tag-filter]')
     const items = section.querySelectorAll<HTMLElement>('[data-carousel-item]')
+      
+    const carousel = section.querySelector<HTMLElement>('[data-carousel]');
+    const progressBar = section.querySelector<HTMLElement>('[data-indicator]');
+
+    // Open the full-size image modal. Some browsers scroll the page when
+    // the dialog's autofocused close button receives focus (since the
+    // dialog can be deep inside the document before it's promoted to the
+    // top layer). We snapshot the scroll position and restore it right
+    // after opening to stop the "jump to top" behaviour.
+    section.querySelectorAll<HTMLButtonElement>('[data-modal-trigger]').forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const id = trigger.dataset.modalTrigger
+        const dialog = id ? document.getElementById(id) : null
+        if (!(dialog instanceof HTMLDialogElement)) return
+
+        const scrollX = window.scrollX
+        const scrollY = window.scrollY
+        dialog.showModal()
+        requestAnimationFrame(() => window.scrollTo(scrollX, scrollY))
+      })
+    })
 
     buttons.forEach((btn) => {
       btn.addEventListener('click', () => {
         const tag = btn.dataset.tagFilter ?? 'all'
+
+        if(carousel){
+          carousel.scrollTo({left: 0, behavior: "smooth"});
+          const bar = progressBar?.querySelector('.progress-fill');
+          if(bar instanceof HTMLElement) bar.style.width= '0%';
+        
+        }        
 
         buttons.forEach((b) => {
           const active = b === btn
@@ -189,7 +255,39 @@ const slideId = (id: string) => `slide-${id}`
         })
       })
     })
-  })
+
+   
+    const navButtons = section.querySelectorAll<HTMLButtonElement>('[data-nav]');
+    const firstItem = carousel?.querySelector<HTMLElement>('.carousel-item');
+
+    if (!carousel || !firstItem) return;
+
+    navButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const dir = btn.dataset.nav === 'next' ? 1 : -1;
+        const itemWidth = (firstItem.offsetWidth + 24); 
+        carousel.scrollBy({ left: dir * itemWidth*2, behavior: 'smooth' });
+      });
+    });
+
+    let ticking = false;
+
+    carousel.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollRatio = carousel.scrollLeft / (carousel.scrollWidth - carousel.clientWidth);
+          const percentage = Math.min(Math.max(scrollRatio * 100, 0), 100);
+          
+          const bar = progressBar?.querySelector('.progress-fill');
+          if (bar instanceof HTMLElement) {
+            bar.style.width = `${percentage}%`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  });
 </script>
 
 <style lang="scss">
@@ -232,15 +330,43 @@ const slideId = (id: string) => `slide-${id}`
 
 .card{
   background-color: var(--color-neutral-100);
+  height: fit-content;
 }
+
 
 .card-body .card-title{
   line-height: unset
 }
 
+.card-body .card-body-info{
+  height:12rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body .card-body-info .badges{
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) * 2) /* 0.5rem = 8px */;
+
+}
+
+.progress-fill{
+  transition:width 01s ease-out;
+}
+
+[data-indicator] {
+  .bg-primary{
+    background-color: var(--link-color);
+  }
+}
+
 
 :global(.darkmode .card) {
         background-color: var(--color-neutral-900);
+        height: fit-content;
   }
 
 </style>
