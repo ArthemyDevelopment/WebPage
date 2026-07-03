@@ -6,6 +6,7 @@ import Counter from '@components/Counter.astro'
 import ContentMedia from '@components/ContentMedia.astro'
 import FeaturedProjects from '@components/FeaturedProjects.astro'
 import FeaturedPosts from '@components/FeaturedPosts.astro'
+import CertificatesCarousel from '@components/CertificatesCarousel.astro'
 import { Accordion, AccordionItem, Avatar, AvatarGroup, Heading, Link } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import QualitiesIcon from '@assets/icons/qualities.svg';
@@ -196,6 +197,11 @@ import SoftwareIcon from '@assets/icons/software.svg';
   </ContentMedia>
   <FeaturedProjects limit={4} items={["project-01", "project-05", "project-06", "project-07"]} />
   <!-- <FeaturedPosts /> -->
+
+  <CertificatesCarousel title="Degrees" category="degree" />
+  <CertificatesCarousel title="Certifications" category="certificate" />
+  <CertificatesCarousel title="Online Courses" category="course" filterable={true} />
+<!-- 
   <section class="my-64">
     <div class="container grid grid-cols-1 gap-12 md:grid-cols-2">
       <div class="flex flex-col items-start gap-4">
@@ -287,7 +293,7 @@ import SoftwareIcon from '@assets/icons/software.svg';
         <Counter count="48+" title="Months" sub="Since launch" />
       </div>
     </div>
-  </section>
+  </section>-->
 </DefaultLayout>
 
 <style>

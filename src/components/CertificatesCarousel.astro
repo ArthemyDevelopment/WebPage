@@ -1,0 +1,246 @@
+---
+import { Badge, Heading, Button } from 'accessible-astro-components'
+import { Image } from 'astro:assets'
+import { credentials } from '@data/credentials'
+import type { Credential } from '@data/credentials'
+
+/**
+ * CertificatesCarousel Component
+ *
+ * @description A daisyUI carousel of credential cards (https://daisyui.com/components/carousel/,
+ * https://daisyui.com/components/card/), reading from the static `credentials` list in
+ * src/data/credentials.ts. Reusable for certificates, diplomas, or degrees:
+ *
+ *   <CertificatesCarousel title="Certificates" category="certificate" filterable />
+ *   <CertificatesCarousel title="Diplomas" category="diploma" />
+ *   <CertificatesCarousel title="Degrees" category="degree" />
+ *
+ * Prev/next navigation uses daisyUI's native anchor-based carousel (no JS). The only
+ * custom script here handles the optional tag filter bar. Entries are sorted by
+ * featured -> priority -> date automatically, so the data file order doesn't matter
+ * unless you pass an explicit `items` list.
+ */
+interface Props {
+  class?: string
+  title?: string
+  /** Only include credentials of this category */
+  category?: Credential['category']
+  /** Only include credentials with at least one of these tags (lowercase) */
+  tags?: string[]
+  /** Only include these specific ids, in this exact order (overrides category/tags/auto-sort) */
+  items?: string[]
+  /** Only include credentials marked `featured: true` */
+  featuredOnly?: boolean
+  /** Render an "All / tag / tag / ..." filter bar above the carousel, built from the resulting items' tags */
+  filterable?: boolean
+  limit?: number
+}
+
+const {
+  class: className,
+  title = 'Certificates',
+  category,
+  tags,
+  items,
+  featuredOnly = false,
+  filterable = false,
+  limit,
+} = Astro.props
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+
+let list: Credential[]
+
+if (items) {
+  // Explicit order requested: honor it as-is, no auto-sort.
+  list = items.map((id) => credentials.find((c) => c.id === id)).filter((c): c is Credential => Boolean(c))
+} else {
+  list = credentials.filter((c) => {
+    if (category && c.category !== category) return false
+    if (tags?.length && !c.tags.some((t) => tags.includes(t))) return false
+    if (featuredOnly && !c.featured) return false
+    return true
+  })
+
+  list.sort(
+    (a, b) =>
+      Number(b.featured ?? false) - Number(a.featured ?? false) ||
+      (b.priority ?? 0) - (a.priority ?? 0) ||
+      (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0)
+  )
+}
+
+if (limit) list = list.slice(0, limit)
+
+const uniqueTags = filterable ? [...new Set(list.flatMap((c) => c.tags))].sort((a, b) => a.localeCompare(b)) : []
+const slideId = (id: string) => `slide-${id}`
+---
+
+{
+  list.length > 0 && (
+    <section class:list={[className, 'my-24']}>
+      <div class="container" data-carousel-section>
+        <Heading level="h3" class="mb-6">
+          {title}
+        </Heading>
+
+        {filterable && uniqueTags.length > 0 && (
+          <div class="mb-6 flex flex-wrap gap-2" role="group" aria-label={`Filter ${title} by tag`}>
+            <button type="button" class="btn btn-sm btn-tag" data-tag-filter="all" aria-pressed="true">
+              All
+            </button>
+            {uniqueTags.map((tag) => (
+              <button type="button" class="btn btn-sm btn-tag-outline" data-tag-filter={tag} aria-pressed="false">
+                {capitalize(tag)}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div class="carousel carousel-center w-full gap-6">
+          {list.map((credential, index) => {
+            const cardContent = (
+              <Fragment>
+                <div class="card-body">
+                  {/*credential.logo && (
+                    <Image src={credential.logo} alt="" width={96} height={96} class="mb-2 h-8 w-8 object-contain" />
+                  )*/}
+                  <h3 class="card-title">{credential.title}</h3>
+                  {credential.issuer && (
+                    <p class="text-sm opacity-70">
+                      {credential.issuer}
+                      {credential.date && ` · ${credential.date.getFullYear()}`}
+                    </p>
+                  )}
+                  {credential.description && <p>{credential.description}</p>}
+                  {credential.tags.length > 0 && (
+                    <div class="mt-2 flex flex-wrap gap-2">
+                      {credential.tags.map((tag) => (
+                        <Badge>{capitalize(tag)}</Badge>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <figure>
+                  <Image
+                    src={credential.image}
+                    alt={credential.title}
+                    width={480}
+                    class="w-full h-auto"
+                  />
+                </figure>
+              </Fragment>
+            )
+
+            return (
+              <div
+                id={slideId(credential.id)}
+                class="carousel-item relative w-full max-w-sm"
+                data-carousel-item
+                data-tags={credential.tags.join('|')}
+              >
+                <div class="card w-full shadow-sm">
+                  {credential.credentialUrl ? (
+                    <a href={credential.credentialUrl} class="contents" aria-label={credential.title} target="_blank" rel="noopener">
+                      {cardContent}
+                    </a>
+                  ) : (
+                    cardContent
+                  )}
+
+                  {credential.verificationUrl && (
+                    <div class="btn btn-soft">
+                      <Button href={credential.verificationUrl} isExternal>
+                        Verify online
+                      </Button>
+                    </div>
+                  )}
+                </div>
+
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<script>
+  // Only needed for the optional tag filter bar — carousel navigation is pure daisyUI/CSS.
+  document.querySelectorAll<HTMLElement>('[data-carousel-section]').forEach((section) => {
+    const buttons = section.querySelectorAll<HTMLButtonElement>('[data-tag-filter]')
+    const items = section.querySelectorAll<HTMLElement>('[data-carousel-item]')
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const tag = btn.dataset.tagFilter ?? 'all'
+
+        buttons.forEach((b) => {
+          const active = b === btn
+          b.setAttribute('aria-pressed', String(active))
+          b.classList.toggle('btn-tag', active)
+          b.classList.toggle('btn-tag-outline', !active)
+        })
+
+        items.forEach((item) => {
+          const itemTags = (item.dataset.tags ?? '').split('|')
+          item.classList.toggle('hidden', !(tag === 'all' || itemTags.includes(tag)))
+        })
+      })
+    })
+  })
+</script>
+
+<style lang="scss">
+
+
+.btn-tag {
+    --btn-color: var(--link-color);
+    --btn-fg: var(--launcher-theme-light);
+    --btn-soft-bg: initial;
+  
+}
+:global(.darkmode .btn-tag) {
+    --btn-color: var(--link-color);
+    --btn-fg: var(--launcher-theme-dark);
+    --btn-soft-bg: initial;
+  
+}
+
+.btn-tag-outline {
+    --btn-bg: #0000;
+    color: var(--btn-rest-fg, var(--btn-color, var(--link-color)));
+    --btn-border: var(--btn-color, var(--link-color));
+    --btn-border-style: dashed;
+    background-image: none;
+    --btn-inset: 0 0 0 0 oklch(0% 0 0 / 0);
+    --btn-shadow: 0 0 0 0 oklch(0% 0 0 / 0);
+
+  
+}
+
+.btn-soft{
+  --btn-bg: #FFE0C5;
+  --btn-border: var(--launcher-theme-light);
+}
+
+:global(.darkmode .btn-soft){
+  --btn-bg: #723eb3;
+  --btn-border: var(--launcher-theme-dark);
+}
+
+.card{
+  background-color: var(--color-neutral-100);
+}
+
+.card-body .card-title{
+  line-height: unset
+}
+
+
+:global(.darkmode .card) {
+        background-color: var(--color-neutral-900);
+  }
+
+</style>
