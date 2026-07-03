@@ -105,12 +105,7 @@ const slideId = (id: string) => `slide-${id}`
 
           <div class="carousel carousel-center w-full gap-6 scroll-smooth overflow-x-auto" data-carousel>
             {list.map((credential, index) => {
-              const modalId = `modal-${credential.id}`;
-              // Only the text/info block gets wrapped in the credentialUrl <a>.
-              // The image-modal trigger and the "Verify online" link are kept
-              // as SIBLINGS of that anchor — nesting interactive elements
-              // (button/a) inside another <a> is invalid HTML and causes
-              // unpredictable click behaviour.
+              
               const cardBody = (
                 <div class="card-body">
                   {/*credential.logo && (
@@ -155,7 +150,7 @@ const slideId = (id: string) => `slide-${id}`
                     <button
                       type="button"
                       class="w-full h-auto p-0 border-0 bg-transparent cursor-pointer"
-                      data-modal-trigger={modalId}
+                      data-lightbox-image={credential.id}
                       aria-label={`View full size image of ${credential.title}`}>
                       <figure>
                         <Image
@@ -163,8 +158,8 @@ const slideId = (id: string) => `slide-${id}`
                           alt={credential.title}
                           width={480}
                           class="w-full h-auto"
-                          />
-                        </figure>
+                        />
+                      </figure>
                     </button>
 
                     {credential.verificationUrl && (
@@ -173,18 +168,6 @@ const slideId = (id: string) => `slide-${id}`
                       </Link>
                     )}
                   </div>
-
-                  <dialog id={modalId} class="modal">
-                    <div class="modal-box w-11/12 max-w-2xl p-2 relative">
-                      <form method="dialog">
-                        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10">✕</button>
-                      </form>
-                      <Image src={credential.image} alt={credential.title} width={1200} class="w-full h-auto" />
-                    </div>
-                    <form method="dialog" class="modal-backdrop">
-                      <button>close</button>
-                    </form>
-                  </dialog>
                 </div>
               )
             })}
@@ -198,6 +181,34 @@ const slideId = (id: string) => `slide-${id}`
           </div>)}
 
         </div>
+        <div class="lightbox hidden" data-lightbox>
+          <button
+            class="lightbox-backdrop"
+            type="button"
+            data-lightbox-close
+            aria-label="Close image"
+          ></button>
+
+          <div class="lightbox-content md:translate-x-20 lg:translate-x-28">
+            <button
+              class="btn btn-circle absolute top-4 right-4 z-20"
+              type="button"
+              data-lightbox-close>
+              ✕
+            </button>
+
+            {list.map((credential) => (
+              <Image
+                src={credential.image}
+                alt={credential.title}
+                width={1400}
+                class="hidden max-h-[70vh] max-w-[50vw] object-contain"
+                data-lightbox-target={credential.id}
+              />
+            ))}
+          </div>
+        </div>
+        
 
       </div>  
     </section>
@@ -210,26 +221,36 @@ const slideId = (id: string) => `slide-${id}`
     const buttons = section.querySelectorAll<HTMLButtonElement>('[data-tag-filter]')
     const items = section.querySelectorAll<HTMLElement>('[data-carousel-item]')
       
-    const carousel = section.querySelector<HTMLElement>('[data-carousel]');
     const progressBar = section.querySelector<HTMLElement>('[data-indicator]');
 
-    // Open the full-size image modal. Some browsers scroll the page when
-    // the dialog's autofocused close button receives focus (since the
-    // dialog can be deep inside the document before it's promoted to the
-    // top layer). We snapshot the scroll position and restore it right
-    // after opening to stop the "jump to top" behaviour.
-    section.querySelectorAll<HTMLButtonElement>('[data-modal-trigger]').forEach((trigger) => {
-      trigger.addEventListener('click', () => {
-        const id = trigger.dataset.modalTrigger
-        const dialog = id ? document.getElementById(id) : null
-        if (!(dialog instanceof HTMLDialogElement)) return
+    const lightbox = section.querySelector<HTMLElement>('[data-lightbox]');
 
-        const scrollX = window.scrollX
-        const scrollY = window.scrollY
-        dialog.showModal()
-        requestAnimationFrame(() => window.scrollTo(scrollX, scrollY))
-      })
-    })
+    section.querySelectorAll<HTMLButtonElement>('[data-lightbox-image]').forEach((button) => {
+      button.addEventListener('click', () => {
+        if (!lightbox) return;
+
+        lightbox.classList.remove('hidden');
+
+        lightbox
+          .querySelectorAll<HTMLElement>('[data-lightbox-target]')
+          .forEach((img) => img.classList.add('hidden'));
+
+        lightbox
+          .querySelector<HTMLElement>(
+            `[data-lightbox-target="${button.dataset.lightboxImage}"]`
+          )
+          ?.classList.remove('hidden');
+
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    lightbox?.querySelectorAll('[data-lightbox-close]').forEach((button) => {
+      button.addEventListener('click', () => {
+        lightbox.classList.add('hidden');
+        document.body.style.overflow = '';
+      });
+    });
 
     buttons.forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -256,7 +277,7 @@ const slideId = (id: string) => `slide-${id}`
       })
     })
 
-   
+    const carousel = section.querySelector<HTMLElement>('[data-carousel]');
     const navButtons = section.querySelectorAll<HTMLButtonElement>('[data-nav]');
     const firstItem = carousel?.querySelector<HTMLElement>('.carousel-item');
 
@@ -318,7 +339,10 @@ const slideId = (id: string) => `slide-${id}`
   
 }
 
-.btn-soft{
+/* :global() because this class ends up on the <a> rendered inside the
+   imported <Link> component, which is outside this file's style scope —
+   Astro's scoped CSS can't reach it otherwise. */
+:global(.btn-soft){
   --btn-bg: #FFE0C5;
   --btn-border: var(--launcher-theme-light);
 }
@@ -326,6 +350,16 @@ const slideId = (id: string) => `slide-${id}`
 :global(.darkmode .btn-soft){
   --btn-bg: #723eb3;
   --btn-border: var(--launcher-theme-dark);
+}
+
+/* The Link component may ship its own anchor defaults (underline, inline
+   display, link-colored text). Force it back to looking like a daisyUI
+   btn regardless of what Link applies by default. */
+:global(a.btn.btn-soft) {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card{
@@ -367,6 +401,37 @@ const slideId = (id: string) => `slide-${id}`
 :global(.darkmode .card) {
         background-color: var(--color-neutral-900);
         height: fit-content;
-  }
+}
+
+  .lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox.hidden {
+  display: none;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgb(0 0 0 / 80%);
+  cursor: pointer;
+}
+
+.lightbox-content {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 </style>
