@@ -8,9 +8,29 @@ import Sidebar from '@components/Sidebar.astro'
 import Logo from '@components/Logo.astro'
 import LauncherConfig from '@components/LauncherConfig.astro'
 import { SkipLink } from 'accessible-astro-components'
+import { DarkMode } from 'accessible-astro-components'
 import { ClientRouter } from 'astro:transitions'
 import { Icon } from 'astro-icon/components'
 import type { ImageMetadata } from 'astro'
+
+// Fallback icons for main nav dock items — Sidebar.astro's main nav items don't
+// carry an icon field (only externalItems do), so icons are mapped by href here.
+// PLACEHOLDER: edit these keys/values to match your actual routes and preferred icons.
+const dockIconMap: Record<string, string> = {
+  '/': 'lucide:home',
+  '/projects': 'lucide:folder',
+  '/contact': 'lucide:mail',
+}
+
+// Derived navigation items for the mobile dock
+const dockItems = themeConfig.navigation.items
+  .filter((item) => (!item.type || item.type === 'link') && !item.excludeFromLauncher)
+  .slice(0, 5)
+  .map((item) => ({
+    label: item.label,
+    href: item.href,
+    icon: ('icon' in item && item.icon) ? item.icon : (dockIconMap[item.href] ?? null),
+  }))
 
 interface Props {
   /**
@@ -128,15 +148,12 @@ const imageUrl = new URL(imagePath, Astro.site).href
     <div class="drawer lg:drawer-open">
       <input id="main-drawer" type="checkbox" class="drawer-toggle" aria-hidden="true" tabindex="-1" />
 
-      <div class="drawer-content flex min-h-screen flex-col bg-[#FFF0E4] dark:bg-[#723EC3]">
+            <div class="drawer-content flex min-h-screen flex-col bg-[#FFF0E4] dark:bg-[#723EC3]">
         <div class="navbar bg-[#FFF0E4] dark:bg-[#723EC3] border-[#007979] dark:border-[#333D6D] border-b lg:hidden">
-          <label for="main-drawer" class="btn btn-square btn-ghost drawer-button" aria-label="Open navigation">
-            <Icon aria-hidden="true" name="lucide:menu" size="24" />
-          </label>
           <Logo />
         </div>
 
-        <main id="main-content" class="flex-1" transition:animate="fade">
+        <main id="main-content" class="flex-1 pb-24 lg:pb-0" transition:animate="fade">
           <slot />
         </main>
 
@@ -144,6 +161,46 @@ const imageUrl = new URL(imagePath, Astro.site).href
       </div>
 
       <Sidebar />
+
+      <!-- Mobile dock navigation — every button is a flat, direct child of the
+     dock list (DaisyUI's dock sizes each direct child as one equal slot,
+     so nesting a wrapper div around a group breaks that). The three
+     "sections" from the sidebar are recreated via background color
+     grouping instead of wrapper elements. -->
+    <ul class="dock dock-xl lg:hidden fixed bottom-0 inset-x-0 z-50"
+      style="width: auto; padding-bottom: env(safe-area-inset-bottom)"    >
+      {dockItems.map((item) => (
+        <li href={item.href}
+            aria-label={item.label}
+            class="!text-black dark:!text-white bg-[#24B1B1] dark:bg-[#333D6D]">
+            {item.icon && <Icon aria-hidden="true" name={item.icon} size="20" />}
+            <span class="dock-label">{item.label}</span>
+          
+        </li>
+      ))}
+
+      {themeConfig.navigation.externalItems?.map((item) => (
+        <li href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={item.label}
+            class="hover:opacity-75 bg-[#FFE0C5] dark:bg-[#723eb3]">
+            <Icon name={item.icon} size="20          " />
+          
+        </li>
+      ))}
+
+      {themeConfig.navigation.darkmode && (
+        <li>
+          <div class="flex h-full w-full items-center justify-center bg-[#24B1B1] dark:bg-[#333D6D]">
+            <DarkMode>
+              <Icon aria-hidden="true" name="lucide:moon" slot="light" />
+              <Icon aria-hidden="true" name="lucide:sun" slot="dark" />
+            </DarkMode>
+          </div>
+        </li>
+      )}
+    </ul>
       <LauncherConfig />
     </div>
 
