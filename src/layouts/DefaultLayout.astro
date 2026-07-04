@@ -168,37 +168,37 @@ const imageUrl = new URL(imagePath, Astro.site).href
      "sections" from the sidebar are recreated via background color
      grouping instead of wrapper elements. -->
     <ul class="dock dock-xl lg:hidden fixed bottom-0 inset-x-0 z-50"
-      style="width: auto; padding-bottom: env(safe-area-inset-bottom)"    >
+      style="width: auto;"    >
       {dockItems.map((item) => (
-        <li href={item.href}
+        <a href={item.href}
             aria-label={item.label}
-            class="!text-black dark:!text-white bg-[#24B1B1] dark:bg-[#333D6D]">
+            class="dock-main-nav">
             {item.icon && <Icon aria-hidden="true" name={item.icon} size="20" />}
             <span class="dock-label">{item.label}</span>
           
-        </li>
+        </a>
       ))}
 
       {themeConfig.navigation.externalItems?.map((item) => (
-        <li href={item.href}
+        <a href={item.href}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={item.label}
-            class="hover:opacity-75 bg-[#FFE0C5] dark:bg-[#723eb3]">
-            <Icon name={item.icon} size="20          " />
+            class="dock-external-nav hover:opacity-75">
+            <Icon name={item.icon} size="30" />
           
-        </li>
+        </a>
       ))}
 
       {themeConfig.navigation.darkmode && (
-        <li>
-          <div class="flex h-full w-full items-center justify-center bg-[#24B1B1] dark:bg-[#333D6D]">
+        <a class="dock-toggle-darkmode" aria-label="Toggle dark mode">
+          <div>
             <DarkMode>
               <Icon aria-hidden="true" name="lucide:moon" slot="light" />
               <Icon aria-hidden="true" name="lucide:sun" slot="dark" />
             </DarkMode>
           </div>
-        </li>
+        </a>
       )}
     </ul>
       <LauncherConfig />
@@ -230,6 +230,63 @@ const imageUrl = new URL(imagePath, Astro.site).href
         a {
           @include text-decoration(transparent, var(--foreground-color), 4px, 2px);
         }
+      }
+
+      .dock {
+        background-color: #24B1B1;
+        .darkmode & {
+          background-color: #333D6D;
+        }
+      }
+
+      .dock-main-nav{
+        color: black;
+        background-color: transparent;
+        .darkmode & {
+          color: white;
+          //background-color: #333D6D;
+        }
+        border-radius: 0;
+        height: 5.05rem;
+        
+      }
+
+      .dock-main-nav:hover{
+        background-color: rgba(255, 255, 255, 0.25);
+        .darkmode & {
+          background-color: rgba(0, 0, 0, 0.25);
+        }
+      }
+      .dock-external-nav{
+        color: var(--link-color);
+        background-color: #FFE0C5;
+        .darkmode & {
+          background-color: #723eb3;
+        }
+        border-radius: 0;
+        max-width: fit-content;
+        padding-left: 15px;
+        padding-right: 15px;
+        height: 5.05rem
+        
+      }
+
+      .dock-toggle-darkmode{
+        color: black;
+        background-color:transparent;
+        .darkmode & {
+          color: white;
+          //background-color: #333D6D;
+        }
+        border-radius: 0;
+        height: 5.05rem;
+        display: flex;
+        align-items: center;
+        max-width: fit-content;
+        padding-left: 10px;
+        padding-right: 15px;
+        justify-content: center;
+
       }
     </style>
   </body>
