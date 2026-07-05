@@ -216,6 +216,8 @@ const slideId = (id: string) => `slide-${id}`
 }
 
 <script>
+
+  function initCarousel(){
   // Only needed for the optional tag filter bar — carousel navigation is pure daisyUI/CSS.
   document.querySelectorAll<HTMLElement>('[data-carousel-section]').forEach((section) => {
     const buttons = section.querySelectorAll<HTMLButtonElement>('[data-tag-filter]')
@@ -309,6 +311,11 @@ const slideId = (id: string) => `slide-${id}`
       }
     });
   });
+}
+
+initCarousel();
+
+document.addEventListener('astro:page-load', initCarousel);
 </script>
 
 <style lang="scss">

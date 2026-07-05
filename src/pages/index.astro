@@ -10,33 +10,47 @@ import CertificatesCarousel from '@components/CertificatesCarousel.astro'
 import { Accordion, AccordionItem, Avatar, AvatarGroup, Heading, Link } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import QualitiesIcon from '@assets/icons/qualities.svg';
-import HobiesIcon from '@assets/icons/hobbies.svg';
+import HobbiesIcon from '@assets/icons/hobbies.svg';
 import SkillsIcon from '@assets/icons/skills.svg';
 import SoftwareIcon from '@assets/icons/software.svg';
 ---
 
 <DefaultLayout title="Portfolio Matías Mellado" useTitleTemplate={false}>
   <Hero />
-  <section class="my-64">
+  <section class="my-24">
     <div class="container">
       <Heading level="h3" class="mb-8">About Me</Heading>
-          <div class="desc">
-              Hi!, my name is Matías Mellado but on the internet I use the nickname Arthemy.
-              <br>I'm a Technical Game Designer and Senior Unity Developer with a B.A. in Digital Game Design graduated Magna Cum Laude from Universidad Andrés Bello (UNAB) in Chile and a M.Ed in Higher Education Teaching from Universidad Andrés Bello (UNAB) in Chile Graduated Suma Cum Laude.
-              <br><br>My roles have allowed me to bridge the gap between creative vision and technical implementation, with experience in tool development, gameplay systems and leading interdisciplinary teams.
-              I'm passionate about crafting engaging experiences and mentoring other in this game development journey of ours.
-              I also have skills in other areas such as 3D ( modelling, texturing and animation), video editing, adobe suit (Premiere, After Effects, Photoshop, 
-              Illustrator) and some experience in project management.
-              <br><br>
-              I've been working with Unity since 2017 (since 2019 professionally) and worked on 2 published games as well as 1 educational mobile app. I've been
-              teaching Unity and game design as a college professor since 2020. As a hobby I've constantly been involved in quick and small prototype developments in multiple 
-              game jams throughout the years.
-              <br><br>
-              In this portfolio I compile and highlight some of the things I consider relevant about me on a professional level, such as different skills and knowledge, projects 
-              I have worked on, and different recognitions, certificates and diplomas.
+          <div class="desc mb-12">
+            <p class="mb-0">Hi! My name is Matías Mellado, though on the internet I go by Arthemy.</p>
+
+            <p class="mb-3">I'm a Technical Game Designer and Senior Unity Developer with a B.A. in Digital 
+              Game Design (Magna Cum Laude) and an M.Ed. in Higher Education Teaching (Summa Cum Laude), both 
+              from Universidad Andrés Bello (UNAB) in Chile.</p>
+
+            <p class="mb-3">I've worked with Unity since 2017 and since 2022 I've worked professionally as a Unity 
+              developer, contributing to published commercial games, educational applications, and numerous game jam 
+              prototypes. Since 2020 I've also taught Unity and Game Design at college level, an experience that has 
+              strengthened both my technical communication and my passion for mentoring the next generation of developers.</p>
+
+            <p class="mb-3">I'm a high functioning autistic, have ADHD, and have high capacities. These traits have shaped 
+              the way I approach game development, leading me to enjoy complex systems design, recognizing patterns across 
+              gameplay and code, and diving deeply into technical problems until I find solutions that are robust, maintainable, 
+              and intuitive. Rather than something I work around, they've become part of how I think, create, and solve problems.</p>
+
+            <p class="mb-4">Throughout my career, I've naturally ended up working at the intersection of design, engineering, 
+              teaching, and tooling. I don't just build games, I also build the systems, tools, and documentation that help games 
+              get made. I enjoy turning design ideas into technical solutions, creating tools that make development faster, mentoring 
+              other developers, and improving workflows. At the end of the day, I like leaving projects in a better state than I found 
+              them and helping the people around me succeed.</p>
+
+            <p class="mb-3">Beyond game development, I have experience with 3D art, animation, video editing, the Adobe Creative Suite, 
+              and project management, allowing me to collaborate comfortably across multiple disciplines.</p>
+
+            <p class="mb-3">This portfolio showcases the projects, technical work, and achievements that best represent who I am as a 
+              developer. I hope it gives you a good idea of how I think, work, and solve problems.</p>
             </div>
       <div class="grid grid-cols-1 gap-y-16 gap-x-8 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 ">
-        <Feature iconComponent={QualitiesIcon} title="Proffessional Skills">
+        <Feature iconComponent={QualitiesIcon} title="Professional Skills">
           <ul>
             <li>Technical Leadership</li>
             <li>Problem Solving</li>
@@ -129,7 +143,7 @@ import SoftwareIcon from '@assets/icons/software.svg';
             </div>
           </div>
         </Feature>
-        <Feature iconComponent={HobiesIcon} title="Miscellaneous">
+        <Feature iconComponent={HobbiesIcon} title="Miscellaneous">
           <div class="skills-grid">
             <div>
               <h4>Language</h4>
@@ -157,42 +171,41 @@ import SoftwareIcon from '@assets/icons/software.svg';
       </div>
     </div>
   </section>
-  <section class="my-0.5">
+  <section>
     <div class="container">
-      <Heading level="h3" class="mb-8">Professional Experience</Heading>
+      <Heading level="h3">Professional Experience</Heading>
     </div>
   </section>
   <ContentMedia imgSrc="/assets/images/roles/FundaK.jpg" imgHref="https://fundacioncapital.org/soluciones-digitales/lista/" imgTarget="_blank">
     <Heading level="h4">Lead 2D Unity Developer and Technical Designer</Heading>
     <p class="text-2xl">
-      Supported multiple educational apps, coordinating cross-team feature delivery. 
-      Assisted in designing learning activities aligned with educational and technical requirements. 
-      Improved internal tools for content integration, optimizing Unity localization and Addressables workflows.
+      Supported multiple educational applications, coordinating cross-team feature delivery and implementation. 
+      Designed learning activities aligned with educational and technical requirements while improving internal 
+      tools for content integration, optimizing Unity localization and Addressables workflows.
     <!-- <Link isExternal href="https://play.google.com/store/apps/details?id=org.fundacioncapital.listaplus">View on play store</Link> -->
     </p>
   </ContentMedia>
   <ContentMedia imgSrc="/assets/images/roles/store_capsule_main.png" imgHref="https://store.steampowered.com/app/2268250/Hoping_Forest/" imgTarget="_blank"  reverseImg={true}>
     <Heading level="h4">3D Unity Developer</Heading>
     <p class="text-2xl">
-      Using semantic HTML, landmarks, skip links, screen reader friendly content, aria-labels, keyboard accessible
-      navigation and components, clear outlines and tab indicators and the right color contrast, you're more certain of
-      reaching WCAG AA compliance.
+      Designed and developed a complete puzzle game independently, taking responsibility for every stage 
+      of development from concept to release. Created gameplay systems, puzzles, progression, UI, and 
+      supporting tools while continuously iterating on the player experience.
     </p>
   </ContentMedia>
   <ContentMedia imgSrc="/assets/images/roles/minegeon.png" imgHref="https://kickstonestudio.com/our-games" imgTarget="_blank">
     <Heading level="h4">Lead 2D Unity Developer and Technical Designer</Heading>
     <p class="text-2xl">
-      Using semantic HTML, landmarks, skip links, screen reader friendly content, aria-labels, keyboard accessible
-      navigation and components, clear outlines and tab indicators and the right color contrast, you're more certain of
-      reaching WCAG AA compliance.
+      Developed gameplay systems, UI, backend integrations, and internal tools for a live mobile game. 
+      Built a ScriptableObject-driven content pipeline with custom editor tools, integrated Firebase, ads, 
+      and in-app purchases, and mentored an intern while training my successor.
     </p>
   </ContentMedia>
     <ContentMedia imgSrc="/assets/images/roles/SumaYSigueAula.jpg" imgHref="https://cmmedu.uchile.cl/innovaciones-para-el-aula/recursos-para-el-aula/" imgTarget="_blank" reverseImg={true}>
     <Heading level="h4">Internship 2D Unity Development</Heading>
     <p class="text-2xl">
-      Using semantic HTML, landmarks, skip links, screen reader friendly content, aria-labels, keyboard accessible
-      navigation and components, clear outlines and tab indicators and the right color contrast, you're more certain of
-      reaching WCAG AA compliance.
+      Implemented educational minigames in Unity based on predefined game designs and teaching materials. Focused on translating 
+      design specifications into polished gameplay while building reusable systems using ScriptableObjects within a multidisciplinary development environment.
     </p>
   </ContentMedia>
   <FeaturedProjects limit={4} items={["project-01", "project-05", "project-06", "project-07"]} />
