@@ -2,8 +2,8 @@
 title: Development of Hoping Forest
 displayMode: embed
 itchId: 'embed-upload/17278529?color=7AE7E4'
-skills: ['Unity', 'C#', 'Accessibility', 'Smart-Home', 'IoT']
-description: A comprehensive smart home solution designed specifically for users with visual impairments, featuring voice-first interactions and haptic feedback
+skills: ['Unity', 'C#', 'Game Development', 'Steam', 'Production', 'Game Design']
+description: A 3D puzzle game with a cozy lowpoly aesthetic that I developed on my own and self-published on Steam.
 featuredImage: ./featuredImage.png
 itchWidth: '1280'
 itchHeight: '720'
@@ -11,18 +11,44 @@ itchHeight: '720'
 
 ## Project Overview
 
-Our team developed an inclusive smart home solution that makes home automation accessible to everyone, with a special focus on users with visual impairments. The system uses advanced speech recognition and natural language processing to provide intuitive voice control, while incorporating haptic feedback for tactile confirmation of actions.
+This project was b
 
 
 import BlockQuote from '@components/BlockQuote.astro'
 import BreakoutImage from '@components/BreakoutImage.astro'
 import { Image } from 'astro:assets'
+import originalAesthetic from "./original_aesthetic.jpg"
+import updatedAesthetic from "./updated_aesthetic.jpg"
 
 
 {/* 
 <BreakoutImage src="/projects/project-image-1.png" decorative={true} />
 
 */}
+
+## Origins of the project
+
+This project was born on may 2022 during the game jam "Mini-Jam 106: Frogs2", a bi-weekly jam hosted on itch.io with a pre announced theme and a limitiation revealed at the start of the jam. The theme was "Frogs" and the limitation was "Limited time".
+At that time I wanted to make a puzzle game and got inspiration by the hacking minigame of Bioshock and decided to develop this connect-path puzzle game, using the theme of the jam for the protagonist and the limitation for the maximum movements allowed.
+
+The first version of the project had a very simple and flat aesthetic, without any sounds and consisted of 5 levels and was called "Why the Frog cross the road".
+
+
+
+
+
+<figure class="diff aspect-16/9" tabindex="0">
+    <div class="diff-item-1" role="img" tabindex="0">
+        <Image alt="Original aspect of the game, with flat lightning, simple UI and missmatch assets for the tiles" 
+             src={originalAesthetic} />
+    </div>
+    <div class="diff-item-2" role="img">
+        <Image
+            alt="Improved aspect of the game, with cozy aesthetic, pastel colors and lightning, a more consistent UI, better decoration and custom assets for the tiles"
+            src={updatedAesthetic} />
+    </div>
+    <div class="diff-resizer"></div>
+</figure>
 
 
 ## Technical Challenges

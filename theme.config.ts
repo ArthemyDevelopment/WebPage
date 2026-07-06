@@ -8,7 +8,7 @@ export default defineThemeConfig({
   id: 'matias-mellado-portfolio',
   logo: logoImage,
   seo: {
-    title: 'Portfolio Matias Melaldo',
+    title: 'Portfolio Matias Mellado',
     description:
       'Recopilation of highlighted works and projects by Matias Mellado.',
     author: 'Matias Mellado',
