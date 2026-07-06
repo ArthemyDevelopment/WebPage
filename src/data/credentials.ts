@@ -22,6 +22,7 @@ import efSetLogo from '@assets/images/logos/efset.png'
 import criticLogo from '@assets/images/logos/crtic.png'
 import santanderOpenAcademyLogo from '@assets/images/logos/santander-open-academy.png'
 import gameDevTvLogo from '@assets/images/logos/gamedevtv.png'
+import introExcel from '@assets/images/course/IntroToExcel.jpg'
 
 export const CredentialCategory = {
   Course: 'course',
@@ -55,7 +56,7 @@ export interface Credential {
 export const credentials: Credential[] = [
   {
     id: 'board-game-design',
-    title: 'Board and Video Game Design',
+    title: 'Create Board and Video Game Design Projects - 4 Courses in 1',
     category: CredentialCategory.Course,
     issuer: 'Udemy',
     logo: udemyLogo,
@@ -258,6 +259,18 @@ export const credentials: Credential[] = [
     tags: ['game design', 'game development'],
     featured: true,
     description: 'Bachelor degree in Digital Games Design - Magna Cum Laude',
+  },
+  {
+    id: 'intro-to-excel',
+    title: 'Intro to Excel',
+    category: CredentialCategory.Course,
+    issuer: 'Zenva',
+    image: introExcel,
+    date: new Date('2022-01-29'),
+    priority: 40,
+    tags: ['productivity', 'game development'],
+    featured: true,
+    description: 'An introduction to Microsoft Excel, covering basic functions, formulas, and data management techniques.',
   },
   // ...add more certificates, diplomas, and degrees here
 ]

@@ -52,7 +52,7 @@ const { Content } = await render(project)
     featuredImage={project.featuredImage}
   />
   <section class="my-12">
-    <div class="narrow space-content container">
+    <div class="space-content container page-content">
       <ProjectRenderer project={project.data} />
       <Content />
     </div>
@@ -70,5 +70,10 @@ const { Content } = await render(project)
   .narrow {
     margin-inline: auto;
     max-width: 65ch;
+  }
+  
+  .page-content{
+      max-width: 1350px !important;
+    
   }
 </style>

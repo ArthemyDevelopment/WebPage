@@ -2,24 +2,35 @@
 import type { CollectionEntry } from 'astro:content'
 import { Link } from 'accessible-astro-components'
 
+
 interface Props {
   project: CollectionEntry<'projects'>['data']
 }
 
 const { project } = Astro.props
+
+
 ---
 
 {project.displayMode === 'embed' && (
-  <div class="aspect-video w-full overflow-hidden rounded-box">
-    <iframe
-      src={`https://itch.io/embed/${project.itchId}?border_width=0`}
+<div class="embed-container">
+  <iframe
+      src={`https://itch.io/${project.itchId}`}
       title={`Play ${project.title}`}
-      class="h-full w-full"
-      allowfullscreen
+      width="1280"
+      height="720"
+      frameborder="0"
       loading="lazy"
-    />
-  </div>
+  >
+    <a href={`https://itch.io/${project.itchId.split('?')[0]}`}>
+      Play {project.title} on itch.io
+    </a>
+  </iframe>
+</div>
 )}
+<div class="embed-message">
+  <p>This game is only available on desktop. Please view this page on a larger screen.</p>
+</div>
 
 {project.displayMode === 'media' && (
   <div class="aspect-video w-full overflow-hidden rounded-box bg-base-300">
@@ -49,4 +60,43 @@ const { project } = Astro.props
       ))}
     </div>
   )
+
 }
+
+<style>
+  .embed-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+
+  .embed-message {
+    text-align: center;
+    color: var(--text-color);
+    margin-top: 1rem;
+    font-size: larger;
+    font-weight:bold;
+  }
+@media (min-width: 1025px)
+{
+  .embed-container iframe{
+    display:flex !important;
+  }
+  
+  .embed-message {
+    display: none !important;
+  }
+}
+  @media (max-width: 1024px) {
+    .embed-container iframe{
+      display: none !important;
+    }
+
+    .embed-message {
+      display: block !important;
+    }
+  }
+  
+</style>
