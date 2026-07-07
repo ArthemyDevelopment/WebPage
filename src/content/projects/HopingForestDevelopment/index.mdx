@@ -19,6 +19,8 @@ import BreakoutImage from '@components/BreakoutImage.astro'
 import { Image } from 'astro:assets'
 import originalAesthetic from "./original_aesthetic.jpg"
 import updatedAesthetic from "./updated_aesthetic.jpg"
+import originalMenu from "./Original_Menu.png"
+import originalLevels from "./Original_LevelSelection.jpg"
 
 
 {/* 
@@ -33,10 +35,39 @@ At that time I wanted to make a puzzle game and got inspiration by the hacking m
 
 The first version of the project had a very simple and flat aesthetic, without any sounds and consisted of 5 levels and was called "Why the Frog cross the road".
 
+<h6> Comparison of the original and updated aesthetic of the game </h6>
 
+<div class="mx-auto w-[75%]">
+    <figure class="diff aspect-16/9" tabindex="0">
+        <div class="diff-item-1" role="img" tabindex="0">
+            <Image alt="Original Main menu of the game, with simple ui and no decoration"
+                   src={originalMenu} />
+        </div>
+        <div class="diff-item-2" role="img">
+            <Image
+                alt="Improved main menu of the game, with improved UI, animations, and better decorations"
+                src={updatedAesthetic} />
+        </div>
+        <div class="diff-resizer"></div>
+    </figure>
+</div>
 
+<div class="mx-auto w-[75%]">
+    <figure class="diff aspect-16/9" tabindex="0">
+        <div class="diff-item-1" role="img" tabindex="0">
+            <Image alt="Original Level Selection, with simple UI buttons"
+                   src={originalLevels} />
+        </div>
+        <div class="diff-item-2" role="img">
+            <Image
+                alt="Improved Level Selection, with better buttons cards, improved UI and information display"
+                src={updatedAesthetic} />
+        </div>
+        <div class="diff-resizer"></div>
+    </figure>
+</div>
 
-
+<div class="mx-auto w-[75%]">
 <figure class="diff aspect-16/9" tabindex="0">
     <div class="diff-item-1" role="img" tabindex="0">
         <Image alt="Original aspect of the game, with flat lightning, simple UI and missmatch assets for the tiles" 
@@ -49,7 +80,7 @@ The first version of the project had a very simple and flat aesthetic, without a
     </div>
     <div class="diff-resizer"></div>
 </figure>
-
+</div>
 
 ## Technical Challenges
 
@@ -100,3 +131,5 @@ One of the biggest challenges was creating a reliable voice recognition system t
 */}
 
 The project continues to evolve with regular updates based on user feedback, with a focus on expanding support for multiple languages and additional accessibility features.
+
+
