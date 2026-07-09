@@ -45,7 +45,11 @@ export default defineConfig({
         'lucide:*': ['*'],
         'fa6-brands:*': ['*'],
       },
-    }), mdx(), sitemap()],
+    }), mdx({
+      optimize: {
+        ignoreElementNames: ['Lightbox'],
+      },
+    }), sitemap()],
   vite: enhanceConfigForWorkspace(viteConfig),
   env: {
     schema: {

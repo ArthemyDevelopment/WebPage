@@ -1,0 +1,271 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { getMediaType, getYouTubeEmbedUrl, getDriveEmbedUrl } from '../utils/lightbox';
+
+interface Props {
+  /** Local imported image, or a YouTube / Google Drive / remote image URL. */
+  src: ImageMetadata | string;
+  /** Accessible description. Required — used as alt text, iframe title, and default aria-label. */
+  alt: string;
+  /** Optional caption shown under the media inside the lightbox. */
+  caption?: string;
+  /** Optional custom thumbnail (useful for video sources, which have no built-in preview). */
+  thumbnail?: ImageMetadata | string;
+  /** Thumbnail width in px (image sources only). Defaults to 400. */
+  width?: number;
+  height?: number;
+  /** CSS aspect-ratio for video embeds, e.g. "16/9" or "4/3". Defaults to "16/9". */
+  videoAspect?: string;
+  /** Extra classes for the trigger button. */
+  class?: string;
+  /** Extra classes for the rendered thumbnail image. */
+  imgClass?: string;
+  /**
+   * Extra classes for the centered content box. Use this when a page's layout
+   * (e.g. a fixed sidebar) means true viewport-center isn't the visual center —
+   * e.g. `contentClass="md:translate-x-20 lg:translate-x-28"`.
+   */
+  contentClass?: string;
+  /** Override the trigger button's aria-label. Defaults to `alt`. */
+  ariaLabel?: string;
+}
+
+const {
+  src,
+  alt,
+  caption,
+  thumbnail,
+  width = 650,
+  height,
+  videoAspect = '16/9',
+  class: className = '',
+  imgClass = '',
+  contentClass = '',
+  ariaLabel,
+} = Astro.props;
+
+const type = getMediaType(src);
+
+// Stable-enough per-instance id; generated at build time, baked into static HTML.
+const id = `lightbox-${Math.random().toString(36).slice(2, 10)}`;
+
+let embedUrl: string | null = null;
+if (type === 'youtube' && typeof src === 'string') embedUrl = getYouTubeEmbedUrl(src);
+if (type === 'drive' && typeof src === 'string') embedUrl = getDriveEmbedUrl(src);
+
+if ((type === 'youtube' || type === 'drive') && !embedUrl) {
+  throw new Error(`Lightbox: could not parse an embeddable URL from "${src}"`);
+}
+---
+
+<button
+  type="button"
+  data-lightbox-trigger
+  data-lightbox-target={id}
+  class={`group relative block cursor-zoom-in overflow-hidden rounded-lg ${className}`}
+  aria-haspopup="dialog"
+  aria-label={ariaLabel ?? alt}
+>
+  <slot>
+    {type === 'image' && typeof src !== 'string' && (
+      <Image
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        class={`h-auto w-full transition-transform duration-300 group-hover:scale-105 ${imgClass}`}
+      />
+    )}
+
+    {type === 'image' && typeof src === 'string' && (
+      <img
+        src={typeof thumbnail === 'string' ? thumbnail : src}
+        alt={alt}
+        width={width}
+        height={height}
+        loading="lazy"
+        class={`h-auto w-full transition-transform duration-300 group-hover:scale-105 ${imgClass}`}
+      />
+    )}
+
+    {(type === 'youtube' || type === 'drive') && (
+      <span class="relative flex aspect-video w-full items-center justify-center bg-neutral-900">
+        {thumbnail ? (
+          typeof thumbnail === 'string' ? (
+            <img src={thumbnail} alt={alt} class={`h-full w-full object-cover ${imgClass}`} />
+          ) : (
+            <Image src={thumbnail} alt={alt} width={width} class={`h-full w-full object-cover ${imgClass}`} />
+          )
+        ) : (
+          <span class="px-4 text-center text-sm text-neutral-400">{alt}</span>
+        )}
+        <span
+          class="absolute inset-0 flex items-center justify-center bg-black/30 transition-colors group-hover:bg-black/50"
+          aria-hidden="true"
+        >
+          <svg viewBox="0 0 24 24" class="h-14 w-14 fill-white/90 drop-shadow-lg">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </span>
+      </span>
+    )}
+  </slot>
+</button>
+
+<div id={id} class="lightbox hidden" data-lightbox-overlay role="dialog" aria-modal="true" aria-label={alt}>
+  <button type="button" class="lightbox-backdrop" data-lightbox-close aria-label="Close" />
+
+  <div class={`lightbox-content ${contentClass}`}>
+    <button type="button" class="lightbox-close-btn" data-lightbox-close aria-label="Close">
+      <svg viewBox="0 0 24 24" class="h-5 w-5 fill-current">
+        <path d="M6.4 5 5 6.4 10.6 12 5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6L19 6.4 17.6 5 12 10.6z" />
+      </svg>
+    </button>
+
+    {type === 'image' && typeof src !== 'string' && (
+      <Image src={src} alt={alt} width={1600} class="max-h-[85vh] max-w-[90vw] rounded-lg object-contain" />
+    )}
+    {type === 'image' && typeof src === 'string' && (
+      <img src={src} alt={alt} class="max-h-[85vh] max-w-[90vw] rounded-lg object-contain" />
+    )}
+    {(type === 'youtube' || type === 'drive') && (
+      <iframe
+        data-lazy-src={embedUrl}
+        title={alt}
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen
+        class="max-w-[90vw] rounded-lg"
+        style={`aspect-ratio: ${videoAspect}; width: min(90vw, 1024px); border: 0;`}
+      ></iframe>
+    )}
+
+    {caption && <p class="mt-3 text-center text-sm text-neutral-300">{caption}</p>}
+  </div>
+</div>
+
+<script>
+  function initLightboxes(): void {
+    document.querySelectorAll<HTMLButtonElement>('[data-lightbox-trigger]').forEach((trigger) => {
+      if (trigger.dataset.lightboxBound) return;
+      trigger.dataset.lightboxBound = 'true';
+
+      trigger.addEventListener('click', () => {
+        const targetId = trigger.dataset.lightboxTarget;
+        const overlay = targetId ? document.getElementById(targetId) : null;
+        if (overlay) openLightbox(overlay);
+      });
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-lightbox-overlay]').forEach((overlay) => {
+      if (overlay.dataset.lightboxBound) return;
+      overlay.dataset.lightboxBound = 'true';
+
+      // Move the overlay to a direct child of <body>. `position: fixed` is
+      // relative to the viewport only if no ancestor sets a transform,
+      // filter, perspective, or contain — something page layouts / MDX
+      // wrappers (transitions, prose containers, etc.) commonly do further
+      // up the tree. Re-parenting sidesteps that entirely, regardless of
+      // where <Lightbox> ends up being used.
+      if (overlay.parentElement !== document.body) {
+        document.body.appendChild(overlay);
+      }
+
+      overlay.querySelectorAll<HTMLButtonElement>('[data-lightbox-close]').forEach((btn) => {
+        btn.addEventListener('click', () => closeLightbox(overlay));
+      });
+    });
+
+    // One global Escape listener handles every lightbox instance on the page.
+    if (!document.documentElement.dataset.lightboxEscBound) {
+      document.documentElement.dataset.lightboxEscBound = 'true';
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll<HTMLElement>('[data-lightbox-overlay]:not(.hidden)').forEach(closeLightbox);
+      });
+    }
+  }
+
+  function openLightbox(overlay: HTMLElement): void {
+    // Enforce "only one open at a time" across every Lightbox instance on the page.
+    document.querySelectorAll<HTMLElement>('[data-lightbox-overlay]').forEach((other) => {
+      if (other !== overlay) closeLightbox(other);
+    });
+
+    const media = overlay.querySelector<HTMLIFrameElement>('[data-lazy-src]');
+    if (media && !media.getAttribute('src')) {
+      media.setAttribute('src', media.dataset.lazySrc ?? '');
+    }
+
+    overlay.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(overlay: HTMLElement): void {
+    overlay.classList.add('hidden');
+    document.body.style.overflow = '';
+
+    const media = overlay.querySelector<HTMLIFrameElement>('[data-lazy-src]');
+    if (media) media.removeAttribute('src'); // stops video playback
+  }
+
+  // Fires on first load AND after every Astro View Transitions navigation,
+  // so this keeps working if the site adopts <ClientRouter /> later.
+  document.addEventListener('astro:page-load', initLightboxes);
+</script>
+
+<style lang="scss">
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .lightbox.hidden {
+    display: none;
+  }
+
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgb(0 0 0 / 80%);
+    cursor: pointer;
+  }
+
+  .lightbox-content {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lightbox-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 0;
+    border-radius: 9999px;
+    background: rgb(0 0 0 / 70%);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+
+  .lightbox-close-btn:hover {
+    background: rgb(0 0 0 / 90%);
+  }
+</style>
