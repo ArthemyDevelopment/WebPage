@@ -78,6 +78,11 @@ export default defineThemeConfig({
       },*/
       {
         type: 'link',
+        label: 'More about me',
+        href: '/more-about-me',
+      },
+      {
+        type: 'link',
         label: 'Contact',
         href: '/contact',
       },
