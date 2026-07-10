@@ -46,9 +46,7 @@ export default defineConfig({
         'fa6-brands:*': ['*'],
       },
     }), mdx({
-      optimize: {
-        ignoreElementNames: ['Lightbox'],
-      },
+      optimize: false
     }), sitemap()],
   vite: enhanceConfigForWorkspace(viteConfig),
   env: {

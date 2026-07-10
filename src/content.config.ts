@@ -16,6 +16,7 @@ const projects = defineCollection({
       skills: z.array(z.string()).default([]),
       description: z.string().optional(),
       featuredImage: image(),
+      bannerImage: image().optional(),
     }),
     z.object({
       title: z.string(),
@@ -24,6 +25,7 @@ const projects = defineCollection({
       skills: z.array(z.string()).default([]),
       description: z.string().optional(),
       featuredImage: image(),
+      bannerImage: image().optional(),
     }),
     z.object({
       title: z.string(),
@@ -32,6 +34,15 @@ const projects = defineCollection({
       skills: z.array(z.string()).default([]),
       description: z.string().optional(),
       featuredImage: image(),
+      bannerImage: image().optional(),
+    }),
+    z.object({
+      title: z.string(),
+      displayMode: z.literal('content'),
+      skills: z.array(z.string()).default([]),
+      description: z.string().optional(),
+      featuredImage: image(),
+      bannerImage: image().optional(),
     }),
   ]),
 })

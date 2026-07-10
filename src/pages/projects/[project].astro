@@ -6,6 +6,7 @@ import SocialShares from '@components/SocialShares.astro'
 import { Heading } from 'accessible-astro-components'
 import { getCollection, render } from 'astro:content'
 import type { CollectionEntry } from 'astro:content'
+import defaultBanner from '@assets/images/projects/project-image-2.png'
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects')
@@ -22,7 +23,7 @@ export async function getStaticPaths() {
   return projects.map((project, index) => {
     const projectWithImage = {
       ...project,
-      featuredImage: projectImages[index % projectImages.length].src,
+      featuredImage: project.data.bannerImage ?? defaultBanner,
     }
 
     return {
